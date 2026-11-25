@@ -1,6 +1,13 @@
 /*
  * AAA Fathima Furniture site content.
- * Edit this file to change contact details, add products or fix sizes.
+ *
+ * Products and categories are managed in the admin panel (admin.html) once Supabase is
+ * connected (see README). This file still holds:
+ *   - SITE: contact details shown across the site
+ *   - the built-in drawings (`art`) of the original models, which the database refers to
+ *     by model number
+ *   - the original catalogue, used when the database can't be reached and to build
+ *     supabase/seed.sql (node tools/make-seed.mjs)
  *
  * Product fields
  *   id      model number exactly as printed in the catalogue

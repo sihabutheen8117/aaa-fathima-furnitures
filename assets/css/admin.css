@@ -1,0 +1,188 @@
+/* =========================================================
+   AAA Fathima Furniture admin panel.
+   Builds on styles.css (colours, fonts, buttons, fields).
+   Laid out for phones first: one column, big tap targets,
+   and the Save button stays in reach at the bottom.
+   ========================================================= */
+
+body.admin { background: var(--paper); }
+
+/* ---------- header ---------- */
+.ad-top-inner { display: flex; align-items: center; justify-content: space-between; gap: 10px; height: var(--top-h); }
+.ad-top-actions { display: flex; align-items: center; gap: 2px; }
+.ad-top-link {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 .65em; border: 0; border-radius: 8px;
+  background: none; color: #e9dbd0; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+  text-decoration: none; white-space: nowrap;
+}
+.ad-top-link:hover { background: rgba(255, 255, 255, .08); color: #fff; }
+
+.ad-tabs { display: grid; grid-template-columns: 1fr 1fr; background: #fff; border-bottom: 1px solid var(--line); }
+.ad-tabs a {
+  display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px;
+  color: var(--ink-2); font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+.ad-tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--copper); }
+.ad-tab-count { min-width: 22px; padding: 1px 7px; border-radius: 999px; background: var(--stage); color: var(--ink-2); font-family: var(--font-body); font-size: .75rem; font-weight: 600; text-align: center; }
+
+/* ---------- layout ---------- */
+.ad-main { padding: 16px 0 48px; }
+.ad-loading { padding: 64px 0; text-align: center; color: var(--ink-2); }
+.ad-card { max-width: 440px; margin: 20px auto; padding: 22px 18px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; display: grid; gap: 1rem; }
+.ad-card h1 { font-size: 1.9rem; }
+.ad-card .link-btn { justify-self: center; }
+.ad-card code, .ad-main code { padding: .1em .35em; border-radius: 5px; background: var(--stage); font-size: .9em; }
+
+.ad-head { display: flex; align-items: center; gap: 8px; margin: 2px 0 14px; }
+.ad-head .view-title { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.ad-head-btn { flex: none; min-height: 44px; padding: .45em .9em; font-size: 1.05rem; }
+.ad-head-btn .ic { width: 20px; height: 20px; }
+
+.ad-form { display: grid; gap: 1.1rem; }
+.ad-hint { font-size: .85rem; line-height: 1.4; color: var(--ink-2); }
+.ad-req, .ad-opt { margin-left: .35em; font-size: .75rem; font-weight: 500; }
+.ad-req { color: var(--copper-ink); }
+.ad-opt { color: var(--ink-3); }
+.ad-error { padding: .75rem 1rem; border-radius: 10px; background: #fdecea; color: #8c1d18; font-size: .9375rem; }
+.ad-msg { padding: .75rem 1rem; border-radius: 10px; background: var(--stage); font-size: .9375rem; }
+.field select[aria-invalid="true"], .ad-rowitem input[aria-invalid="true"], .ad-dims input[aria-invalid="true"] { border-color: #b3261e; }
+.field input[readonly] { background: var(--stage); color: var(--ink-2); }
+
+/* ---------- lists ---------- */
+.ad-filters { display: grid; gap: 8px; }
+.ad-count { margin: 10px 0; font-size: .9rem; color: var(--ink-2); }
+.ad-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.ad-empty { padding: 32px 0; text-align: center; color: var(--ink-2); }
+.ad-empty a { color: var(--copper-ink); }
+
+.ad-row {
+  display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 8px 10px 8px 8px;
+  border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); text-decoration: none;
+}
+.ad-row:hover { border-color: var(--copper-2); }
+.ad-thumb { position: relative; flex: none; width: 56px; height: 56px; overflow: hidden; border-radius: 10px; background: var(--stage); }
+.ad-thumb.is-round { border-radius: 50%; }
+.ad-thumb img, .ad-thumb svg { position: absolute; inset: 6%; width: 88%; height: 88%; object-fit: contain; }
+.ad-thumb img.cover, .ad-photo-pic img.cover { inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ad-row-text { display: grid; flex: 1; min-width: 0; }
+.ad-row-text b { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; line-height: 1.2; }
+.ad-row-text span { overflow: hidden; color: var(--ink-2); font-size: .875rem; white-space: nowrap; text-overflow: ellipsis; }
+.ad-badge { flex: none; padding: .25em .6em; border-radius: 999px; background: #f1e4d8; color: var(--copper-ink); font-size: .72rem; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; }
+.ad-chev { flex: none; width: 20px; height: 20px; color: var(--ink-3); }
+
+.ad-crow { display: flex; gap: 6px; }
+.ad-crow .ad-row { flex: 1; min-width: 0; }
+.ad-move { display: grid; gap: 4px; }
+.ad-move button {
+  display: grid; place-items: center; width: 44px; min-height: 40px; border: 1px solid var(--line); border-radius: 10px;
+  background: #fff; color: var(--ink);
+}
+.ad-move button:hover:not(:disabled) { border-color: var(--copper-2); }
+.ad-move button:disabled { color: #cfc5bd; cursor: default; }
+
+/* ---------- forms ---------- */
+.ad-photo { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; align-items: center; }
+.ad-photo-pic { position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 12px; background: var(--stage); }
+.ad-photo-pic.is-round { border-radius: 50%; }
+.ad-photo-pic img, .ad-photo-pic svg { position: absolute; inset: 6%; width: 88%; height: 88%; object-fit: contain; }
+.ad-photo-actions { display: grid; gap: 6px; justify-items: start; min-width: 0; }
+.ad-photo-actions .btn { min-height: 44px; padding: .45em .9em; font-size: 1.02rem; }
+.ad-photo-actions .btn .ic { width: 20px; height: 20px; }
+.ad-photo-actions .field { width: 100%; }
+.ad-photo-actions .link-btn { padding: .35em 0; }
+/* the file input is visually hidden, so show its focus on the button that opens it */
+.ad-photo-actions input[type="file"]:focus-visible + .link-btn,
+.ad-photo-actions label.btn:has(+ input[type="file"]:focus-visible) { outline: 3px solid var(--copper-2); outline-offset: 2px; }
+
+.ad-fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.ad-fieldset legend { margin-bottom: 8px; padding: 0; font-size: .9375rem; font-weight: 500; }
+.ad-dims { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ad-dims label { font-size: .85rem; color: var(--ink-2); font-weight: 400; }
+.ad-fieldset .field-error { margin-top: 6px; }
+
+.ad-prefix {
+  display: flex; align-items: center; border: 1px solid #d9d0c8; border-radius: 10px; background: #fff;
+  transition: border-color .2s, box-shadow .2s;
+}
+.ad-prefix span { padding-left: .85em; color: var(--ink-3); white-space: nowrap; }
+.field .ad-prefix input { border: 0; padding-left: .15em; background: none; box-shadow: none; }
+.ad-prefix:focus-within { border-color: var(--copper); box-shadow: 0 0 0 3px rgba(200, 116, 58, .22); }
+.ad-prefix:has(input[readonly]) { background: var(--stage); }
+.ad-prefix:has(input[aria-invalid="true"]) { border-color: #b3261e; }
+
+/* on/off switch: a real checkbox, drawn as a switch */
+.ad-switch {
+  position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center;
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer;
+}
+.ad-switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.ad-switch-ui { position: relative; width: 48px; height: 28px; border-radius: 999px; background: #cfc5bd; transition: background-color .2s; }
+.ad-switch-ui::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .25); transition: transform .2s var(--ease);
+}
+.ad-switch input:checked + .ad-switch-ui { background: var(--wa); }
+.ad-switch input:checked + .ad-switch-ui::after { transform: translateX(20px); }
+.ad-switch input:focus-visible + .ad-switch-ui { outline: 3px solid var(--copper-2); outline-offset: 2px; }
+.ad-switch b { display: block; font-weight: 500; }
+.ad-switch small { display: block; color: var(--ink-2); font-size: .85rem; line-height: 1.35; }
+
+.ad-more { border: 1px solid var(--line); border-radius: 12px; }
+.ad-more summary { padding: 14px; cursor: pointer; font-weight: 500; }
+.ad-more summary small { display: block; color: var(--ink-2); font-size: .85rem; font-weight: 400; }
+.ad-more-body { display: grid; gap: 1.2rem; padding: 0 14px 16px; }
+.ad-rows { display: grid; gap: 4px; justify-items: start; }
+.ad-rows .ad-rowlist { width: 100%; }
+.ad-rows-title { font-weight: 500; }
+.ad-rowlist { display: grid; gap: 8px; margin: 6px 0 0; padding: 0; list-style: none; }
+.ad-rowlist:empty { display: none; }
+.ad-rowitem { display: grid; gap: 6px; align-items: center; }
+.ad-rowitem input {
+  width: 100%; min-width: 0; padding: .6em .7em; border: 1px solid #d9d0c8; border-radius: 10px; background: #fff; font-size: 16px;
+}
+.ad-rowitem input:focus { outline: none; border-color: var(--copper); box-shadow: 0 0 0 3px rgba(200, 116, 58, .22); }
+.ad-spec { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr) 44px; }
+/* a piece takes two lines on a phone: code and name, then its three sizes */
+.ad-piece { grid-template-columns: repeat(12, minmax(0, 1fr)) 44px; padding: 6px; border-radius: 12px; background: var(--stage); }
+.ad-piece input { padding-left: .55em; padding-right: .55em; }
+.ad-piece input:nth-child(1) { grid-column: 1 / 7; }
+.ad-piece input:nth-child(2) { grid-column: 7 / 13; }
+.ad-piece input:nth-child(3) { grid-column: 1 / 5; }
+.ad-piece input:nth-child(4) { grid-column: 5 / 9; }
+.ad-piece input:nth-child(5) { grid-column: 9 / 13; }
+.ad-piece .ad-x { grid-column: 13; grid-row: 1 / 3; align-self: stretch; height: auto; }
+.ad-x { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 10px; background: var(--stage); color: var(--ink-2); font-size: 1.5rem; line-height: 1; }
+.ad-piece .ad-x { background: #fff; }
+.ad-x:hover { color: #b3261e; }
+
+/* Save stays in reach at the bottom of the screen while the form scrolls */
+.ad-savebar {
+  position: sticky; bottom: 0; z-index: 5; margin: 0 calc(-1 * var(--gutter));
+  padding: 14px var(--gutter) calc(12px + var(--safe-b));
+  background: linear-gradient(rgba(255, 255, 255, 0), #fff 26%);
+}
+.ad-danger { display: grid; justify-items: center; gap: 2px; padding-top: 4px; text-align: center; }
+.ad-delete { color: #b3261e; }
+.ad-delete:hover { color: #8c1d18; }
+.ad-delete:disabled { color: var(--ink-3); text-decoration: none; cursor: default; }
+
+/* the toast sits above the Save bar */
+body.admin .toast { bottom: calc(96px + var(--safe-b)); }
+
+/* small phones: the round logo is enough next to "View shop" and "Sign out" */
+@media (max-width: 389px) {
+  .admin .ad-top-inner .brand-words { display: none; }
+}
+@media (min-width: 520px) {
+  .ad-filters { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+  .ad-photo { grid-template-columns: 150px minmax(0, 1fr); }
+  .ad-piece { grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr) repeat(3, minmax(0, .6fr)) 44px; background: none; padding: 0; }
+  .ad-piece input:nth-child(n) { grid-column: auto; }
+  .ad-piece .ad-x { grid-column: auto; grid-row: auto; height: 44px; background: var(--stage); }
+}
+@media (min-width: 960px) {
+  :root { --top-h: 68px; }
+  .ad-main { padding-top: 24px; }
+  body.admin .toast { bottom: 28px; }
+}

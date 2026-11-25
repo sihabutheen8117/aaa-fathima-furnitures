@@ -7,11 +7,16 @@
  *   #/search/<text>  search results
  *   #mw-203          one product (same format as links shared from the old site)
  *   #/enquiry  #/about  #/contact
+ *
+ * The catalogue comes from catalogue.js (the database, or data.js as a fallback),
+ * so the shop starts once it has loaded.
  */
-(function () {
+window.MWCatalogue.ready.then(function (catalogue) {
   'use strict';
 
-  const { SITE, CATEGORIES, PRODUCTS } = window.MW_DATA;
+  const { CATEGORIES, PRODUCTS } = catalogue;
+  const { SITE } = window.MW_DATA;
+  const ART = window.MWCatalogue.ART;
   const D = window.MWDraw;
 
   const $ = (s, el = document) => el.querySelector(s);
@@ -21,14 +26,22 @@
 
   const catById = Object.fromEntries(CATEGORIES.map((c) => [c.id, c]));
   const byId = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]));
-  const modelNum = (id) => parseInt(id.replace(/\D/g, ''), 10);
+  const byModel = (a, b) => a.localeCompare(b, 'en', { numeric: true });   // MW-99 before MW-100
   const catOrder = Object.fromEntries(CATEGORIES.map((c, i) => [c.id, i]));
-  const SORTED = PRODUCTS.slice().sort((a, b) => catOrder[a.cat] - catOrder[b.cat] || modelNum(a.id) - modelNum(b.id));
+  const SORTED = PRODUCTS.slice().sort((a, b) => catOrder[a.cat] - catOrder[b.cat] || byModel(a.id, b.id));
   const inCat = (id) => SORTED.filter((p) => id === 'all' || p.cat === id);
+  // categories with nothing in them yet stay off the home page, menu and chips
+  const SHOWN = CATEGORIES.filter((c) => inCat(c.id).length > 0);
   const lowerName = (name) => name.replace(/^(?!TV)\w/, (c) => c.toLowerCase());
 
   /* ---------- helpers ---------- */
-  const titleOf = (p) => (p.cat === 'bedroom-set' ? `${p.name} bedroom set` : catById[p.cat].single);
+  // a product with its own name (like a bedroom set) is called by it: "Black Coral bedroom set";
+  // other products are called by their category: "Wardrobe"
+  function titleOf(p) {
+    const single = catById[p.cat].single;
+    if (!p.name) return single;
+    return p.name.toLowerCase().endsWith(single.toLowerCase()) ? p.name : `${p.name} ${lowerName(single)}`;
+  }
   const fmtDims = (d) => {
     if (!d) return '';
     const parts = [];
@@ -37,7 +50,7 @@
     if (d.w != null) parts.push('W.' + d.w);
     return parts.join(' | ');
   };
-  const sizeLine = (p) => fmtDims(p.dims) || (p.components ? '4-piece set' : 'Size on request');
+  const sizeLine = (p) => fmtDims(p.dims) || (p.components.length ? `${p.components.length}-piece set` : 'Size on request');
   const cm = (inches) => Math.round(inches * 2.54);
   const waLink = (text) => `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`;
   function openExternal(url) {
@@ -49,9 +62,17 @@
   const ICON_PLUS = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
   const ICON_CHECK = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 
+  // stand-in picture for a product that has neither a photo nor a built-in drawing
+  const noPicture = (alt) => `<span class="no-pic"${alt ? ` role="img" aria-label="${alt}"` : ''}>${D.logoMark()}</span>`;
+
+  // the product's picture: its photo (small one in lists, large one with opts.big),
+  // otherwise its built-in drawing, drawn to its real proportions
   const svgCache = new Map();
   function drawing(p, opts = {}) {
-    if (p.photo) return `<img src="${esc(p.photo)}" alt="${opts.label === '' ? '' : esc(titleOf(p) + ' ' + p.id)}" loading="lazy">`;
+    const alt = opts.label === '' ? '' : esc(titleOf(p) + ' ' + p.id);
+    const src = opts.big ? p.photo : p.thumb;
+    if (src) return `<img src="${esc(src)}" alt="${alt}" loading="${opts.big ? 'eager' : 'lazy'}" decoding="async">`;
+    if (!p.art) return noPicture(alt);
     const key = p.id + JSON.stringify(opts);
     if (!svgCache.has(key)) {
       svgCache.set(key, D.render(p.art, Object.assign({ seed: p.id, label: `${titleOf(p)} ${p.id}` }, opts)));
@@ -154,7 +175,7 @@
       <a class="card-link" href="#${p.id.toLowerCase()}">
         <span class="card-img">${drawing(p, { label: '' })}</span>
         <span class="card-text">
-          <span class="card-name">${esc(p.cat === 'bedroom-set' ? p.name + ' set' : catById[p.cat].single)}</span>
+          <span class="card-name">${esc(p.name ? p.name + (p.components.length ? ' set' : '') : catById[p.cat].single)}</span>
           <span class="card-model">${p.id}</span>
           <span class="card-dims">${esc(sizeLine(p))}</span>
         </span>
@@ -164,16 +185,29 @@
   }
 
   /* ---------- home ---------- */
+  // round tile picture: the category's own photo, else its chosen model, else its first model with a picture
+  function catPicture(c) {
+    if (c.photo) return `<img class="cover" src="${esc(c.photo)}" alt="" loading="lazy" decoding="async">`;
+    const list = inCat(c.id);
+    const rep = (byId[c.rep] && byId[c.rep].cat === c.id && byId[c.rep]) || list.find((p) => p.thumb || p.art) || list[0];
+    return drawing(rep, { pad: 0.03, label: '' });
+  }
+
   let homeReady = false;
   function renderHome() {
     if (homeReady) return;
     homeReady = true;
-    $$('[data-art]').forEach((el) => { el.innerHTML = drawing(byId[el.dataset.art], { pad: 0.02, label: '' }); });
+    // banner pictures are built-in drawings, so they stay even if that model is removed from the shop
+    $$('[data-art]').forEach((el) => {
+      const art = ART[el.dataset.art];
+      if (art) el.innerHTML = D.render(art, { seed: el.dataset.art, pad: 0.02, label: '' });
+    });
     $('[data-mark]').innerHTML = D.logoMark();
-    $('#cats').innerHTML = CATEGORIES.map((c) => `<li><a class="cat" href="#/c/${c.id}">
-        <span class="cat-img">${drawing(byId[c.rep], { pad: 0.03, label: '' })}</span>
+    $('#cats').innerHTML = SHOWN.map((c) => `<li><a class="cat" href="#/c/${c.id}">
+        <span class="cat-img">${catPicture(c)}</span>
         <span class="cat-name">${esc(c.name)}</span></a></li>`).join('') +
       `<li><a class="cat cat-all" href="#/c/all"><span class="cat-img">${D.logoMark()}</span><span class="cat-name">All products</span></a></li>`;
+    $('#cats').removeAttribute('aria-busy');
     initBanner();
   }
 
@@ -240,7 +274,7 @@
     const chips = $('#list-chips');
     chips.hidden = isSearch;
     if (!isSearch) {
-      chips.innerHTML = [{ id: 'all', name: 'All' }].concat(CATEGORIES).map((c) =>
+      chips.innerHTML = [{ id: 'all', name: 'All' }].concat(SHOWN).map((c) =>
         `<a class="chip" href="#/c/${c.id}" data-chip${c.id === route.cat ? ' aria-current="page"' : ''}>${esc(c.name)}</a>`).join('');
       // keep the current category's chip in view (scrolls the chip strip only, never the page)
       const on = $('[aria-current="page"]', chips);
@@ -259,7 +293,7 @@
     return `<table class="dims-table"><tbody>${rows.map(([k, v]) =>
       `<tr><th scope="row">${k}</th><td>${v != null ? `${v} in<span>${cm(v)} cm</span>` : '<span>Ask us</span>'}</td></tr>`).join('')}</tbody></table>`;
   }
-  const specList = (specs) => Object.entries(specs).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
+  const specList = (specs) => specs.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
   function componentsTable(p) {
     return `<table class="components">
       <thead><tr><th scope="col">Code</th><th scope="col">Piece</th><th scope="col">Size (inches)</th></tr></thead>
@@ -274,26 +308,26 @@
     crumb.textContent = cat.name;
     crumb.setAttribute('href', `#/c/${p.cat}`);
 
-    const dimsKnown = p.dims && (p.dims.h != null || p.dims.d != null || p.dims.w != null);
-    $('#pd-figure').innerHTML = drawing(p, dimsKnown ? { dims: p.dims, pad: 0.02 } : { pad: 0.04 });
-    $('#pd-tag').innerHTML = `<b>MW - ${modelNum(p.id)}</b><span>${esc(p.cat === 'bedroom-set' ? p.name : cat.single)}</span>`;
-    $('#pd-title').textContent = p.cat === 'bedroom-set' ? `${p.name} bedroom set` : `${title} ${p.id}`;
+    $('#pd-figure').innerHTML = drawing(p, p.dims ? { dims: p.dims, pad: 0.02, big: true } : { pad: 0.04, big: true });
+    $('#pd-tag').innerHTML = `<b>${esc(p.id.replace(/-/g, ' - '))}</b><span>${esc(p.name || cat.single)}</span>`;
+    $('#pd-title').textContent = p.name ? title : `${title} ${p.id}`;
     $('#pd-finish').textContent = p.finish || '';
 
     let detail = '';
-    if (p.components) {
-      detail += `<p class="quote">&ldquo;${esc(p.quote)}&rdquo;</p>`;
-      detail += componentsTable(p);
-      detail += `<dl class="pd-specs">${specList(p.specs)}</dl>`;
-    } else {
-      detail += p.dims ? dimsTable(p.dims) : '<p class="pd-note">Sizes for this model are not printed in the catalogue. Ask us on WhatsApp and we will send them.</p>';
-      if (p.dims && (p.dims.h == null || p.dims.d == null || p.dims.w == null)) detail += '<p class="pd-note">Some sizes for this model are not printed in the catalogue. Ask us for the full measurements.</p>';
-      detail += `<dl class="pd-specs">${specList({ Material: 'Particle board', Assembly: 'Easy assembly' })}</dl>`;
+    if (p.quote) detail += `<p class="quote">&ldquo;${esc(p.quote)}&rdquo;</p>`;
+    if (p.components.length) detail += componentsTable(p);
+    if (p.dims) {
+      detail += dimsTable(p.dims);
+      if (p.dims.h == null || p.dims.d == null || p.dims.w == null) detail += '<p class="pd-note">Ask us for the full measurements of this model.</p>';
+    } else if (!p.components.length) {
+      detail += '<p class="pd-note">Ask us on WhatsApp for the measurements of this model and we will send them.</p>';
     }
+    if (p.specs.length) detail += `<dl class="pd-specs">${specList(p.specs)}</dl>`;
     $('#pd-detail').innerHTML = detail;
 
     const d = fmtDims(p.dims);
-    $('#pd-wa').href = waLink(`Hello ${SITE.name}, I'm interested in ${p.cat === 'bedroom-set' ? `the ${p.name} bedroom set` : `the ${title.toLowerCase()}`} ${p.id}${d ? ` (${d})` : ''}. Could you share the price and availability?`);
+    const what = p.name ? title : lowerName(title);
+    $('#pd-wa').href = waLink(`Hello ${SITE.name}, I'm interested in the ${what} ${p.id}${d ? ` (${d})` : ''}. Could you share the price and availability?`);
 
     const others = inCat(p.cat).filter((x) => x.id !== p.id);
     $('#pd-more').hidden = others.length === 0;
@@ -399,7 +433,7 @@
   /* ---------- menu ---------- */
   const menu = $('#menu');
   const menuBtn = $('#menu-btn');
-  $('#menu-cats').innerHTML = CATEGORIES.map((c) => `<a href="#/c/${c.id}">${esc(c.name)} <small>${inCat(c.id).length}</small></a>`).join('') +
+  $('#menu-cats').innerHTML = SHOWN.map((c) => `<a href="#/c/${c.id}">${esc(c.name)} <small>${inCat(c.id).length}</small></a>`).join('') +
     `<a href="#/c/all">All products <small>${PRODUCTS.length}</small></a>`;
   menuBtn.addEventListener('click', () => { menu.showModal(); menuBtn.setAttribute('aria-expanded', 'true'); });
   menu.addEventListener('close', () => menuBtn.setAttribute('aria-expanded', 'false'));
@@ -413,7 +447,8 @@
   function parse(hash) {
     let h = String(hash || '').replace(/^#/, '');
     try { h = decodeURIComponent(h); } catch (e) { /* keep it as typed */ }
-    if (/^mw-\d+$/i.test(h) && byId[h.toUpperCase()]) return { view: 'product', id: h.toUpperCase() };
+    // a product: its model number, like #mw-203 (also the format of links shared from the old site)
+    if (h && h[0] !== '/' && byId[h.toUpperCase()]) return { view: 'product', id: h.toUpperCase() };
     const [head, ...rest] = h.replace(/^\//, '').split('/');
     const arg = rest.join('/').trim();
     if (head === 'c' && (arg === 'all' || catById[arg])) return { view: 'list', cat: arg };
@@ -421,7 +456,7 @@
     if (['enquiry', 'about', 'contact'].includes(head)) return { view: head };
     // section links from the old one-page site
     if (head === 'catalogue') return { view: 'list', cat: 'all' };
-    if (head === 'bedroom-sets') return { view: 'list', cat: 'bedroom-set' };
+    if (head === 'bedroom-sets' && catById['bedroom-set']) return { view: 'list', cat: 'bedroom-set' };
     if (head === 'materials') return { view: 'about' };
     return { view: 'home' };
   }
@@ -530,4 +565,4 @@
   renderCounts();
   renderFormList();
   render(parse(location.hash));
-})();
+});

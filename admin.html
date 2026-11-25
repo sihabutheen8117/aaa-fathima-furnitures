@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin | AAA Fathima Furniture</title>
+  <meta name="theme-color" content="#26120d">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Jost:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="admin" data-screen="loading">
+  <header class="top">
+    <div class="wrap ad-top-inner">
+      <a class="brand" href="#/products" aria-label="AAA Fathima Furniture admin, products">
+        <img class="brand-mark" src="assets/img/logo.webp" alt="" width="36" height="36">
+        <span class="brand-words" aria-hidden="true">
+          <span class="brand-name">AAA Fathima</span>
+          <span class="brand-sub">A d m i n</span>
+        </span>
+      </a>
+      <div class="ad-top-actions" id="ad-user" hidden>
+        <a class="ad-top-link" href="index.html" target="_blank" rel="noopener">View shop</a>
+        <button class="ad-top-link" type="button" id="sign-out">Sign out</button>
+      </div>
+    </div>
+    <nav class="ad-tabs" id="ad-tabs" aria-label="Admin sections" hidden>
+      <a href="#/products" data-tab="products">Products <span class="ad-tab-count" id="tab-count-products"></span></a>
+      <a href="#/categories" data-tab="categories">Categories <span class="ad-tab-count" id="tab-count-categories"></span></a>
+    </nav>
+  </header>
+
+  <main class="ad-main" id="main" tabindex="-1">
+    <div class="wrap narrow">
+
+      <p class="ad-loading" id="screen-loading" role="status">Loading&hellip;</p>
+
+      <!-- ===== Not connected to Supabase yet ===== -->
+      <section class="ad-card" id="screen-setup" hidden aria-labelledby="setup-title">
+        <h1 id="setup-title" data-title tabindex="-1">Connect the database</h1>
+        <p>The admin panel saves products in a Supabase database, and it isn't connected yet.</p>
+        <p>Follow <b>Admin panel setup</b> in the README, then put the project URL and publishable key in <code>assets/js/config.js</code>.</p>
+      </section>
+
+      <!-- ===== Sign in ===== -->
+      <section class="ad-card" id="screen-login" hidden aria-labelledby="login-title">
+        <h1 id="login-title" data-title tabindex="-1">Staff sign in</h1>
+        <form class="ad-form" id="login-form" novalidate>
+          <div class="field">
+            <label for="login-email">Email</label>
+            <input id="login-email" type="email" autocomplete="username" inputmode="email" required>
+          </div>
+          <div class="field">
+            <label for="login-password">Password</label>
+            <input id="login-password" type="password" autocomplete="current-password" required>
+          </div>
+          <p class="ad-error" id="login-error" role="alert" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+        <button class="link-btn" type="button" id="show-forgot" aria-expanded="false" aria-controls="forgot-form">Forgot password?</button>
+        <form class="ad-form" id="forgot-form" novalidate hidden>
+          <p>We'll email you a link to set a new password.</p>
+          <div class="field">
+            <label for="forgot-email">Email</label>
+            <input id="forgot-email" type="email" autocomplete="username" inputmode="email" required>
+          </div>
+          <p class="ad-msg" id="forgot-msg" role="status" hidden></p>
+          <button class="btn btn-outline btn-block" type="submit">Send reset link</button>
+        </form>
+      </section>
+
+      <!-- ===== Set a new password (after opening the emailed link) ===== -->
+      <section class="ad-card" id="screen-newpass" hidden aria-labelledby="newpass-title">
+        <h1 id="newpass-title" data-title tabindex="-1">Set a new password</h1>
+        <form class="ad-form" id="newpass-form" novalidate>
+          <!-- lets password managers save the new password against the right account -->
+          <input class="sr-only" id="newpass-user" type="email" autocomplete="username" tabindex="-1" aria-hidden="true" readonly>
+          <div class="field">
+            <label for="newpass">New password</label>
+            <input id="newpass" type="password" autocomplete="new-password" minlength="8" required aria-describedby="newpass-hint">
+            <p class="ad-hint" id="newpass-hint">At least 8 characters.</p>
+          </div>
+          <p class="ad-error" id="newpass-error" role="alert" hidden></p>
+          <button class="btn btn-primary btn-block" type="submit">Save password</button>
+        </form>
+      </section>
+
+      <!-- ===== Signed in, but not on the staff list ===== -->
+      <section class="ad-card" id="screen-denied" hidden aria-labelledby="denied-title">
+        <h1 id="denied-title" data-title tabindex="-1">No access yet</h1>
+        <p><b id="denied-email"></b> is signed in, but isn't on the staff list. Ask the site owner to add this email to the <code>admins</code> table.</p>
+        <button class="btn btn-outline btn-block" type="button" data-sign-out>Sign out</button>
+      </section>
+
+      <!-- ===== Products ===== -->
+      <section id="view-products" hidden aria-labelledby="products-title">
+        <div class="ad-head">
+          <h1 class="view-title" id="products-title" data-title tabindex="-1">Products</h1>
+          <a class="btn btn-primary ad-head-btn" href="#/products/new">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add product
+          </a>
+        </div>
+        <div class="ad-filters" role="search">
+          <div class="field">
+            <label class="sr-only" for="p-search">Search products</label>
+            <input id="p-search" type="search" placeholder="Search model, name or finish" autocomplete="off" enterkeyhint="search">
+          </div>
+          <div class="field">
+            <label class="sr-only" for="p-cat">Category</label>
+            <select id="p-cat"></select>
+          </div>
+        </div>
+        <p class="ad-count" id="p-count" aria-live="polite"></p>
+        <ul class="ad-list" id="p-list"></ul>
+        <p class="ad-empty" id="p-empty" hidden>No products match. <a href="#/products/new">Add a product</a></p>
+      </section>
+
+      <!-- ===== Add or edit a product ===== -->
+      <section id="view-product" hidden aria-labelledby="pf-title">
+        <div class="ad-head">
+          <a class="back" href="#/products" aria-label="Back to products">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </a>
+          <h1 class="view-title" id="pf-title" data-title tabindex="-1">New product</h1>
+        </div>
+
+        <form class="ad-form" id="pf" novalidate>
+          <div class="ad-photo">
+            <div class="ad-photo-pic" id="pf-pic"></div>
+            <div class="ad-photo-actions">
+              <label class="btn btn-outline" for="pf-file">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1.5-2h6l1.5 2h2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                <span id="pf-file-label">Add photo</span>
+              </label>
+              <input class="sr-only" id="pf-file" type="file" accept="image/*">
+              <button class="link-btn" type="button" id="pf-photo-remove" hidden>Remove photo</button>
+              <p class="ad-hint" id="pf-photo-hint">A photo on a plain, light background looks best.</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="pf-id">Model number <span class="ad-req">required</span></label>
+            <input id="pf-id" type="text" required autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="MW-210" aria-describedby="pf-id-hint pf-id-error">
+            <p class="ad-hint" id="pf-id-hint">Letters, numbers and dashes, as printed in the catalogue.</p>
+            <p class="field-error" id="pf-id-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="pf-cat">Category <span class="ad-req">required</span></label>
+            <select id="pf-cat" required aria-describedby="pf-cat-error"></select>
+            <p class="field-error" id="pf-cat-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="pf-name">Name <span class="ad-opt">optional</span></label>
+            <input id="pf-name" type="text" autocomplete="off" aria-describedby="pf-name-hint">
+            <p class="ad-hint" id="pf-name-hint">Only for models with their own name, like the <i>Black Coral</i> bedroom set. Most products leave this empty.</p>
+          </div>
+
+          <div class="field">
+            <label for="pf-finish">Colour and finish</label>
+            <input id="pf-finish" type="text" autocomplete="off" placeholder="White with walnut shelves">
+          </div>
+
+          <fieldset class="ad-fieldset">
+            <legend>Size in inches <span class="ad-opt">leave empty if not known</span></legend>
+            <div class="ad-dims">
+              <div class="field"><label for="pf-h">Height</label><input id="pf-h" type="text" inputmode="decimal" autocomplete="off"></div>
+              <div class="field"><label for="pf-d">Depth</label><input id="pf-d" type="text" inputmode="decimal" autocomplete="off"></div>
+              <div class="field"><label for="pf-w">Width</label><input id="pf-w" type="text" inputmode="decimal" autocomplete="off"></div>
+            </div>
+            <p class="field-error" id="pf-dims-error" hidden></p>
+          </fieldset>
+
+          <label class="ad-switch">
+            <input type="checkbox" id="pf-visible" checked>
+            <span class="ad-switch-ui" aria-hidden="true"></span>
+            <span><b>Show on the website</b><small>Switch off to hide it without deleting it.</small></span>
+          </label>
+
+          <details class="ad-more" id="pf-more">
+            <summary>More details <small>specifications, set pieces, series, tagline</small></summary>
+            <div class="ad-more-body">
+              <div class="ad-rows">
+                <p class="ad-rows-title">Specifications</p>
+                <p class="ad-hint">Shown as small labelled facts on the product screen.</p>
+                <ul class="ad-rowlist" id="pf-specs"></ul>
+                <button class="link-btn" type="button" id="pf-spec-add">+ Add specification</button>
+              </div>
+              <div class="ad-rows">
+                <p class="ad-rows-title">Pieces in this set</p>
+                <p class="ad-hint">For sets only, like a bedroom set's dresser, wardrobe and cot. Sizes in inches.</p>
+                <ul class="ad-rowlist" id="pf-pieces"></ul>
+                <button class="link-btn" type="button" id="pf-piece-add">+ Add piece</button>
+              </div>
+              <div class="field">
+                <label for="pf-series">Series <span class="ad-opt">optional</span></label>
+                <input id="pf-series" type="text" autocomplete="off" placeholder="Bedroom Series 3">
+              </div>
+              <div class="field">
+                <label for="pf-quote">Tagline <span class="ad-opt">optional</span></label>
+                <input id="pf-quote" type="text" autocomplete="off" placeholder="Take Comfort Into Luxurious Slumber">
+              </div>
+            </div>
+          </details>
+
+          <p class="ad-error" id="pf-error" role="alert" hidden></p>
+          <div class="ad-savebar">
+            <button class="btn btn-primary btn-block" type="submit" id="pf-save">Save product</button>
+          </div>
+          <div class="ad-danger" id="pf-danger" hidden>
+            <a class="link-btn" id="pf-view" href="#" target="_blank" rel="noopener">View on the website</a>
+            <button class="link-btn ad-delete" type="button" id="pf-delete">Delete this product</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ===== Categories ===== -->
+      <section id="view-categories" hidden aria-labelledby="categories-title">
+        <div class="ad-head">
+          <h1 class="view-title" id="categories-title" data-title tabindex="-1">Categories</h1>
+          <a class="btn btn-primary ad-head-btn" href="#/categories/new">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add category
+          </a>
+        </div>
+        <p class="ad-count">The home page shows categories in this order. Use the arrows to move one.</p>
+        <ol class="ad-list" id="c-list"></ol>
+      </section>
+
+      <!-- ===== Add or edit a category ===== -->
+      <section id="view-category" hidden aria-labelledby="cf-title">
+        <div class="ad-head">
+          <a class="back" href="#/categories" aria-label="Back to categories">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </a>
+          <h1 class="view-title" id="cf-title" data-title tabindex="-1">New category</h1>
+        </div>
+
+        <form class="ad-form" id="cf" novalidate>
+          <div class="field">
+            <label for="cf-name">Name <span class="ad-req">required</span></label>
+            <input id="cf-name" type="text" required autocomplete="off" placeholder="Dining tables" aria-describedby="cf-name-hint cf-name-error">
+            <p class="ad-hint" id="cf-name-hint">As shown on the home page, usually plural.</p>
+            <p class="field-error" id="cf-name-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="cf-single">Name for one item <span class="ad-req">required</span></label>
+            <input id="cf-single" type="text" required autocomplete="off" placeholder="Dining table" aria-describedby="cf-single-hint cf-single-error">
+            <p class="ad-hint" id="cf-single-hint">Used for product titles: &ldquo;Dining table MW-410&rdquo;.</p>
+            <p class="field-error" id="cf-single-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="cf-id">Web address</label>
+            <div class="ad-prefix"><span aria-hidden="true">#/c/</span><input id="cf-id" type="text" autocomplete="off" spellcheck="false" autocapitalize="none" aria-describedby="cf-id-hint cf-id-error"></div>
+            <p class="ad-hint" id="cf-id-hint">Filled in from the name. It can't be changed later, so links keep working.</p>
+            <p class="field-error" id="cf-id-error" hidden></p>
+          </div>
+
+          <fieldset class="ad-fieldset">
+            <legend>Picture on the home page</legend>
+            <div class="ad-photo">
+              <div class="ad-photo-pic is-round" id="cf-pic"></div>
+              <div class="ad-photo-actions">
+                <div class="field">
+                  <label for="cf-rep">Use the picture of</label>
+                  <select id="cf-rep"></select>
+                </div>
+                <label class="btn btn-outline" for="cf-file">
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1.5-2h6l1.5 2h2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                  <span id="cf-file-label">Add photo</span>
+                </label>
+                <input class="sr-only" id="cf-file" type="file" accept="image/*">
+                <button class="link-btn" type="button" id="cf-photo-remove" hidden>Remove photo</button>
+                <p class="ad-hint" id="cf-pic-hint"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <label class="ad-switch">
+            <input type="checkbox" id="cf-visible" checked>
+            <span class="ad-switch-ui" aria-hidden="true"></span>
+            <span><b>Show on the website</b><small>Hiding a category also hides all its products.</small></span>
+          </label>
+
+          <p class="ad-error" id="cf-error" role="alert" hidden></p>
+          <div class="ad-savebar">
+            <button class="btn btn-primary btn-block" type="submit" id="cf-save">Save category</button>
+          </div>
+          <div class="ad-danger" id="cf-danger" hidden>
+            <button class="link-btn ad-delete" type="button" id="cf-delete">Delete this category</button>
+            <p class="ad-hint" id="cf-delete-note" hidden></p>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+  <script src="assets/js/draw.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
