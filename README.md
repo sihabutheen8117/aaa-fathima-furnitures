@@ -64,7 +64,7 @@ Product drawings are generated from the `art` description of each product (see `
 
 ## How enquiries work
 
-There is no backend. The contact form, the "Ask on WhatsApp" buttons and the enquiry list each open WhatsApp (to 97459 36872) with the message already written. The visitor only has to press send.
+There is no backend. The contact form, the "Ask on WhatsApp" buttons and the enquiry list each open WhatsApp (to 88706 39863) with the message already written. The visitor only has to press send.
 
 ## Logo
 
