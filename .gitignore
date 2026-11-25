@@ -1,0 +1,8 @@
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# local tooling
+.playwright-mcp/
+dist/
