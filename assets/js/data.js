@@ -26,24 +26,19 @@
     mapQuery: 'AAA Fathima Furniture, Murukkumon, Nilamel, Kollam, Kerala 691534',
   };
 
-  const ROOMS = [
-    { id: 'bedroom', name: 'Bedroom', rep: 'MW-251' },
-    { id: 'living', name: 'Living and storage', rep: 'MW-305' },
-    { id: 'work', name: 'Work and study', rep: 'MW-193' },
-  ];
-
+  // Shown on the home page in this order. `rep` is the model drawn in the category's round picture.
   const CATEGORIES = [
-    { id: 'bedroom-set', name: 'Bedroom sets', single: 'Bedroom set', room: 'bedroom' },
-    { id: 'wardrobe', name: 'Wardrobes', single: 'Wardrobe', room: 'bedroom' },
-    { id: 'dresser', name: 'Dressers', single: 'Dresser', room: 'bedroom' },
-    { id: 'bedside', name: 'Bedside tables', single: 'Bedside table', room: 'bedroom' },
-    { id: 'kids-wardrobe', name: 'Kids wardrobes', single: 'Kids wardrobe', room: 'bedroom' },
-    { id: 'tv-unit', name: 'TV units', single: 'TV unit', room: 'living' },
-    { id: 'cabinet', name: 'Multi-purpose cabinets', single: 'Multi-purpose cabinet', room: 'living' },
-    { id: 'book-case', name: 'Book cases', single: 'Book case', room: 'living' },
-    { id: 'shoe-rack', name: 'Shoe racks', single: 'Shoe rack', room: 'living' },
-    { id: 'office-table', name: 'Office tables', single: 'Office table', room: 'work' },
-    { id: 'study-table', name: 'Study tables', single: 'Study table', room: 'work' },
+    { id: 'bedroom-set', name: 'Bedroom sets', single: 'Bedroom set', room: 'bedroom', rep: 'MW-250' },
+    { id: 'wardrobe', name: 'Wardrobes', single: 'Wardrobe', room: 'bedroom', rep: 'MW-203' },
+    { id: 'dresser', name: 'Dressers', single: 'Dresser', room: 'bedroom', rep: 'MW-195' },
+    { id: 'tv-unit', name: 'TV units', single: 'TV unit', room: 'living', rep: 'MW-305' },
+    { id: 'office-table', name: 'Office tables', single: 'Office table', room: 'work', rep: 'MW-193' },
+    { id: 'study-table', name: 'Study tables', single: 'Study table', room: 'work', rep: 'MW-167' },
+    { id: 'kids-wardrobe', name: 'Kids wardrobes', single: 'Kids wardrobe', room: 'bedroom', rep: 'MW-169' },
+    { id: 'bedside', name: 'Bedside tables', single: 'Bedside table', room: 'bedroom', rep: 'MW-350' },
+    { id: 'cabinet', name: 'Multi-purpose cabinets', single: 'Multi-purpose cabinet', room: 'living', rep: 'MW-357' },
+    { id: 'book-case', name: 'Book cases', single: 'Book case', room: 'living', rep: 'MW-351' },
+    { id: 'shoe-rack', name: 'Shoe racks', single: 'Shoe rack', room: 'living', rep: 'MW-353' },
   ];
 
   /* ---- drawing helpers ---- */
@@ -284,5 +279,5 @@
       art: cab(32, 69, 17, 'white', pair('printGalaxy'), { y: 3, plinth: 'pink' }) },
   ];
 
-  root.MW_DATA = { SITE, ROOMS, CATEGORIES, PRODUCTS };
+  root.MW_DATA = { SITE, CATEGORIES, PRODUCTS };
 })(window);

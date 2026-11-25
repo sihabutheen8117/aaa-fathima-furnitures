@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>AAA Fathima Furniture | Wardrobes, bedroom sets and storage from Kollam</title>
   <meta name="description" content="AAA Fathima Furniture, Kollam: wardrobes, dressers, bedroom sets, TV units, office and study tables. One of South India's top wholesale furniture distributors for over 30 years. Enquire on WhatsApp.">
-  <meta name="theme-color" content="#4a1c16">
+  <meta name="theme-color" content="#26120d">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -14,7 +14,7 @@
   <meta property="og:description" content="Wardrobes, dressers, bedroom sets, TV units and office tables from Kollam, supplied across South India for over 30 years.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@500;600&family=Parisienne&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Jost:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script type="application/ld+json">
   {
@@ -34,255 +34,276 @@
   }
   </script>
 </head>
-<body>
+<body data-view="home">
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <div class="promo">
-    <div class="wrap promo-inner">
-      <p>New from us: the <strong>AAA&nbsp;Fathima&nbsp;Premium</strong> range.</p>
-      <a class="promo-link" data-wa="Hello AAA Fathima Furniture, please send me your full catalogue." href="#contact">Get the full catalogue on WhatsApp</a>
-    </div>
-  </div>
-
-  <header class="site-header" id="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="#top" aria-label="AAA Fathima Furniture, back to top">
-        <img class="brand-mark" src="assets/img/logo.webp" alt="" width="50" height="50">
+  <!-- ===== Header: menu, logo, enquiry list ===== -->
+  <header class="top">
+    <div class="wrap top-inner">
+      <button class="icon-btn menu-btn" type="button" id="menu-btn" aria-label="Open menu" aria-controls="menu" aria-expanded="false">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a class="brand" href="#/" aria-label="AAA Fathima Furniture, home">
+        <img class="brand-mark" src="assets/img/logo.webp" alt="" width="40" height="40">
         <span class="brand-words" aria-hidden="true">
           <span class="brand-name">AAA Fathima</span>
           <span class="brand-sub">F u r n i t u r e</span>
         </span>
       </a>
-
-      <nav class="site-nav" id="site-nav" aria-label="Main">
-        <a href="#bedroom-sets">Bedroom sets</a>
-        <a href="#catalogue">Catalogue</a>
-        <a href="#about">About us</a>
-        <a href="#materials">Materials</a>
-        <a href="#contact">Contact</a>
+      <nav class="top-links" aria-label="Main">
+        <a href="#/" data-tab="home">Shop</a>
+        <a href="#/about" data-tab="about">About us</a>
+        <a href="#/contact" data-tab="contact">Contact</a>
+        <a href="tel:+919946000862">99460 00862</a>
       </nav>
-
-      <div class="header-actions">
-        <a class="header-call" href="tel:+919946000862">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
-          <span>99460 00862</span>
-        </a>
-        <button class="list-btn" type="button" data-open-list aria-label="Open enquiry list">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10l1 4H6zM5 9h14v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1zm4 3v2h6v-2z"/></svg>
-          <span class="list-btn-label">Enquiry list</span>
-          <span class="count" data-count hidden>0</span>
-        </button>
-        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" id="menu-btn">
-          <span class="sr-only">Menu</span>
-          <span class="menu-bars" aria-hidden="true"></span>
-        </button>
-      </div>
+      <a class="icon-btn list-link" href="#/enquiry" aria-label="Enquiry list">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H6.5A1.5 1.5 0 0 0 5 5.5v14A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-14A1.5 1.5 0 0 0 17.5 4H16"/><rect x="8" y="2.5" width="8" height="3.5" rx="1"/><path d="M9 11h6M9 15h4"/></svg>
+        <span class="count" data-count hidden>0</span>
+      </a>
     </div>
   </header>
 
-  <main id="main">
-    <!-- Hero -->
-    <section class="hero" id="top">
-      <div class="hero-watermark" id="hero-watermark" aria-hidden="true"></div>
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <h1>Furniture that feels like home.</h1>
-          <p class="lede">Wardrobes, dressers, bedroom sets, TV units and office tables from Kollam, supplied wholesale and retail across South India for over 30 years.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#catalogue">Browse the catalogue</a>
-            <a class="btn btn-outline" data-wa="Hello AAA Fathima Furniture, I'd like to know more about your furniture." href="#contact">
-              <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.25-.12-1.46-.72-1.69-.8s-.39-.12-.55.12-.63.8-.78.96-.29.19-.53.06a6.7 6.7 0 0 1-3.34-2.92c-.25-.43.25-.4.72-1.34a.45.45 0 0 0-.02-.43c-.06-.12-.55-1.33-.76-1.82s-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04 4.77 4.77 0 0 0 1 2.53 10.9 10.9 0 0 0 4.18 3.7c1.56.67 2.17.73 2.95.61a2.5 2.5 0 0 0 1.66-1.17 2.05 2.05 0 0 0 .14-1.17c-.06-.1-.22-.16-.46-.28z"/></svg>
-              Chat on WhatsApp
-            </a>
+  <!-- ===== Search ===== -->
+  <div class="search-band">
+    <div class="wrap">
+      <form class="search" id="search-form" role="search">
+        <label class="sr-only" for="q">Search for products</label>
+        <input id="q" type="search" placeholder="Search for products" autocomplete="off" enterkeyhint="search">
+        <button type="submit" aria-label="Search">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <main id="main" tabindex="-1">
+
+    <!-- ===== Home: banner + categories ===== -->
+    <section class="view" id="view-home" aria-labelledby="home-title">
+      <h1 class="sr-only" id="home-title" data-view-title tabindex="-1">AAA Fathima Furniture, Kollam</h1>
+      <div class="wrap">
+        <div class="banner" aria-roledescription="carousel" aria-label="Highlights">
+          <div class="slides" id="slides">
+            <div class="slide slide-sets" role="group" aria-roledescription="slide" aria-label="1 of 3">
+              <div class="slide-copy">
+                <p class="slide-kicker">Bedroom sets</p>
+                <h2 class="slide-title">Complete bedroom sets</h2>
+                <p class="slide-text">Dresser, wardrobe, cot and bedside table in one finish.</p>
+                <a class="slide-btn" href="#/c/bedroom-set">Shop now</a>
+              </div>
+              <div class="slide-art" data-art="MW-250"></div>
+            </div>
+            <div class="slide slide-premium" role="group" aria-roledescription="slide" aria-label="2 of 3">
+              <div class="slide-copy">
+                <p class="slide-kicker">New from us</p>
+                <h2 class="slide-title">AAA&nbsp;Fathima Premium range</h2>
+                <p class="slide-text">Get the full catalogue on WhatsApp.</p>
+                <a class="slide-btn" data-wa="Hello AAA Fathima Furniture, please send me your full catalogue." href="#/contact">Get catalogue</a>
+              </div>
+              <div class="slide-art" data-mark></div>
+            </div>
+            <div class="slide slide-work" role="group" aria-roledescription="slide" aria-label="3 of 3">
+              <div class="slide-copy">
+                <p class="slide-kicker">Office and study</p>
+                <h2 class="slide-title">Tables for work and study</h2>
+                <p class="slide-text">Office tables, study desks and a kids desk set.</p>
+                <a class="slide-btn" href="#/c/office-table">Shop now</a>
+              </div>
+              <div class="slide-art" data-art="MW-193"></div>
+            </div>
           </div>
-          <ul class="hero-proof" aria-label="Certifications">
-            <li>ISO 9001:2015 certified</li>
-            <li>MSME registered</li>
-            <li>Make in India</li>
-          </ul>
+          <button class="banner-arrow banner-prev" type="button" aria-label="Previous slide">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button class="banner-arrow banner-next" type="button" aria-label="Next slide">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <div class="dots" id="dots"></div>
         </div>
 
-        <figure class="hero-figure">
-          <div class="hero-scene" id="hero-scene"></div>
-          <figcaption class="hero-caption">
-            <span class="tag"><b>MW - 251</b><span>Azure Haven</span></span>
-            <span class="script">Take Comfort Into Luxurious Slumber</span>
-          </figcaption>
-        </figure>
+        <h2 class="section-title">Shop by category</h2>
+        <ul class="cats" id="cats"></ul>
+
+        <ul class="trust" aria-label="About us in short">
+          <li><b>30+ years</b><span>in the furniture trade</span></li>
+          <li><b>ISO 9001:2015</b><span>certified company</span></li>
+          <li><b>Wholesale &amp; retail</b><span>across South India</span></li>
+        </ul>
       </div>
     </section>
 
-    <!-- Rooms -->
-    <section class="section rooms" id="collections" aria-labelledby="rooms-title">
+    <!-- ===== Product list: one category, all products or search results ===== -->
+    <section class="view" id="view-list" aria-labelledby="list-title" hidden>
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="rooms-title">Browse by room</h2>
-          <p>Choose a category to see every model we make for it, with sizes.</p>
+        <div class="view-head">
+          <button class="back" type="button" data-back aria-label="Back">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div>
+            <h1 class="view-title" id="list-title" data-view-title tabindex="-1"></h1>
+            <p class="view-sub" id="list-sub" aria-live="polite"></p>
+          </div>
         </div>
-        <div class="rooms-grid" id="rooms"></div>
-      </div>
-    </section>
-
-    <!-- Bedroom sets -->
-    <section class="section series" id="bedroom-sets" aria-labelledby="series-title">
-      <div class="series-watermark" id="series-watermark" aria-hidden="true"></div>
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="series-title">Bedroom sets</h2>
-          <p>Each set comes with a dresser, wardrobe, cot and bedside table in one matching finish.</p>
-        </div>
-        <div class="series-tabs" role="tablist" aria-label="Bedroom series" id="series-tabs"></div>
-        <div class="series-panel" id="series-panel" role="tabpanel" tabindex="0"></div>
-      </div>
-    </section>
-
-    <!-- Catalogue -->
-    <section class="section catalogue" id="catalogue" aria-labelledby="catalogue-title">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 id="catalogue-title">Catalogue</h2>
-          <p>Sizes are in inches and read the way they do in our printed catalogue: height, depth, width.</p>
-        </div>
-      </div>
-      <div class="cat-tools" id="cat-tools">
-        <div class="wrap cat-tools-inner">
-          <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
-          <label class="search">
-            <span class="sr-only">Search the catalogue</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 3a7.5 7.5 0 0 1 5.96 12.05l4.25 4.24-1.42 1.42-4.24-4.25A7.5 7.5 0 1 1 10.5 3zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/></svg>
-            <input type="search" id="cat-search" placeholder="Model no. or finish, e.g. MW-203" autocomplete="off">
-          </label>
-        </div>
-      </div>
-      <div class="wrap">
-        <p class="cat-count" id="cat-count" aria-live="polite"></p>
-        <ul class="cat-grid" id="cat-grid"></ul>
-        <div class="cat-empty" id="cat-empty" hidden>
-          <p>No model matches <strong id="cat-empty-q"></strong>. Check the model number, or show every model.</p>
-          <button class="btn btn-outline" type="button" id="cat-reset">Show all models</button>
+        <div class="chips" id="list-chips" role="group" aria-label="Categories"></div>
+        <ul class="grid" id="list-grid"></ul>
+        <div class="empty" id="list-empty" hidden>
+          <p>No model matches <strong id="list-empty-q"></strong>. Check the model number, or browse the categories.</p>
+          <a class="btn btn-outline" href="#/">Browse categories</a>
         </div>
       </div>
     </section>
 
-    <!-- About -->
-    <section class="section about" id="about" aria-labelledby="about-title">
-      <div class="about-watermark" id="about-watermark" aria-hidden="true"></div>
-      <div class="wrap about-grid">
-        <div class="about-story">
-          <h2 id="about-title">Experience counts</h2>
-          <p class="about-lede">With over 30 years in the furniture industry, we are recognised as one of the top wholesale furniture distributors across South India.</p>
-          <h3>Introducing AAA&nbsp;Fathima Premium</h3>
-          <p>We are delighted to introduce our new brand identity, AAA&nbsp;Fathima Premium. <a class="about-link" data-wa="Hello AAA Fathima Furniture, please tell me about the AAA Fathima Premium range." href="#contact">Ask us about the Premium range on WhatsApp</a>.</p>
-          <p class="about-places"><span>Head office in Kollam</span><span>Branch in Ernakulam</span></p>
+    <!-- ===== Product detail ===== -->
+    <section class="view" id="view-product" aria-labelledby="pd-title" hidden>
+      <div class="wrap">
+        <div class="view-head">
+          <button class="back" type="button" data-back aria-label="Back">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <a class="crumb" id="pd-crumb" href="#/"></a>
         </div>
-        <div class="about-why">
+        <div class="pd">
+          <div class="pd-figure" id="pd-figure"></div>
+          <div class="pd-body">
+            <p class="tag" id="pd-tag"></p>
+            <h1 class="pd-title" id="pd-title" data-view-title tabindex="-1"></h1>
+            <p class="pd-finish" id="pd-finish"></p>
+            <div id="pd-detail"></div>
+            <div class="pd-actions">
+              <a class="btn btn-wa btn-block" id="pd-wa" target="_blank" rel="noopener">
+                <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-glyph"/></svg>
+                Ask about this on WhatsApp
+              </a>
+              <button class="btn btn-outline btn-block" type="button" id="pd-add">Add to enquiry list</button>
+              <button class="link-btn" type="button" id="pd-share">
+                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.3 13.3 7.4 4.4M15.7 6.3l-7.4 4.4"/></svg>
+                Share this model
+              </button>
+            </div>
+          </div>
+        </div>
+        <section class="more" id="pd-more" aria-labelledby="pd-more-title">
+          <h2 class="section-title" id="pd-more-title"></h2>
+          <ul class="rail" id="pd-more-list"></ul>
+        </section>
+      </div>
+    </section>
+
+    <!-- ===== Enquiry list (the "cart") ===== -->
+    <section class="view" id="view-enquiry" aria-labelledby="eq-title" hidden>
+      <div class="wrap narrow">
+        <div class="view-head">
+          <button class="back" type="button" data-back aria-label="Back">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div>
+            <h1 class="view-title" id="eq-title" data-view-title tabindex="-1">Enquiry list</h1>
+            <p class="view-sub">Ask about price and availability in one WhatsApp message.</p>
+          </div>
+        </div>
+        <ul class="eq-items" id="eq-items"></ul>
+        <div class="empty" id="eq-empty">
+          <p>Your list is empty. Tap <b>Add to list</b> on any model to collect it here.</p>
+          <a class="btn btn-primary" href="#/">Browse categories</a>
+        </div>
+        <form class="panel" id="eq-form" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="eq-name">Your name</label>
+              <input id="eq-name" type="text" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="eq-place">Town or city</label>
+              <input id="eq-place" type="text" autocomplete="address-level2">
+            </div>
+          </div>
+          <button class="btn btn-wa btn-block" type="submit">
+            <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-glyph"/></svg>
+            Send list on WhatsApp
+          </button>
+          <button class="link-btn" type="button" id="eq-clear">Clear list</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section class="view" id="view-about" aria-labelledby="about-title" hidden>
+      <div class="wrap narrow">
+        <div class="view-head">
+          <button class="back" type="button" data-back aria-label="Back">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <h1 class="view-title" id="about-title" data-view-title tabindex="-1">About us</h1>
+        </div>
+        <div class="prose">
+          <p class="lede">With over 30 years in the furniture industry, we are recognised as one of the top wholesale furniture distributors across South India.</p>
+          <h2>Introducing AAA&nbsp;Fathima Premium</h2>
+          <p>We are delighted to introduce our new brand identity, AAA&nbsp;Fathima Premium. <a data-wa="Hello AAA Fathima Furniture, please tell me about the AAA Fathima Premium range." href="#/contact">Ask us about the Premium range on WhatsApp</a>.</p>
+          <p class="pills"><span>Head office in Kollam</span><span>Branch in Ernakulam</span></p>
+
           <h2>Why choose us</h2>
-          <ul class="why-list">
-            <li>
-              <h3>Quality furniture</h3>
-              <p>Made with particle board from Greenland, Associate, Dolby Prowud and Nailah.</p>
-            </li>
-            <li>
-              <h3>Affordable price</h3>
-              <p>Pricing that works for dealers stocking a showroom and for families furnishing a home.</p>
-            </li>
-            <li>
-              <h3>Creativity and innovation</h3>
-              <p>Designs and finishes that keep up with how homes are furnished today.</p>
-            </li>
-            <li>
-              <h3>Focus on client satisfaction</h3>
-              <p>Ask us anything on WhatsApp or phone, from choosing a model to placing an order.</p>
-            </li>
+          <ul class="why">
+            <li><b>Quality furniture</b>Made with particle board from Greenland, Associate, Dolby Prowud and Nailah.</li>
+            <li><b>Affordable price</b>Pricing that works for dealers stocking a showroom and for families furnishing a home.</li>
+            <li><b>Creativity and innovation</b>Designs and finishes that keep up with how homes are furnished today.</li>
+            <li><b>Focus on client satisfaction</b>Ask us anything on WhatsApp or phone, from choosing a model to placing an order.</li>
           </ul>
-        </div>
-      </div>
-    </section>
 
-    <!-- Materials -->
-    <section class="section materials" id="materials" aria-labelledby="materials-title">
-      <div class="wrap materials-grid">
-        <div class="materials-copy">
-          <h2 id="materials-title">What our furniture is made of</h2>
-          <p>Everything you need to know about material finishes, starting with the boards. We build with particle board from four established Indian manufacturers.</p>
+          <h2>What our furniture is made of</h2>
+          <p>We build with particle board from four established Indian manufacturers, finished in solid colours, wood grains, stone textures and high gloss. Every piece is designed for easy assembly, and bedroom sets include storage.</p>
           <ul class="boards">
             <li><span class="board-swatch board-swatch-1" aria-hidden="true"></span>Greenland particle board</li>
             <li><span class="board-swatch board-swatch-2" aria-hidden="true"></span>Associate particle board</li>
             <li><span class="board-swatch board-swatch-3" aria-hidden="true"></span>Dolby Prowud</li>
             <li><span class="board-swatch board-swatch-4" aria-hidden="true"></span>Nailah Chip Board Pvt. Ltd</li>
           </ul>
+
+          <h2>Certifications</h2>
+          <ul class="certs">
+            <li><b>ISO 9001:2015</b> certified company</li>
+            <li><b>MSME</b> registered enterprise</li>
+            <li><b>Make in India</b> manufactured locally</li>
+            <li><b>Eco friendly</b> materials</li>
+          </ul>
         </div>
-        <dl class="facts">
-          <div>
-            <dt>Material</dt>
-            <dd>Particle board, finished in solid colours, wood grains, stone textures and high gloss.</dd>
-          </div>
-          <div>
-            <dt>Assembly</dt>
-            <dd>Easy assembly. Every piece is designed to go together quickly where it will be used.</dd>
-          </div>
-          <div>
-            <dt>Storage</dt>
-            <dd>Bedroom sets include storage. The Black Coral cot has a hydraulic lift-up base.</dd>
-          </div>
-          <div>
-            <dt>Sizes</dt>
-            <dd>Listed in inches as H | D | W. Each model page also shows centimetres.</dd>
-          </div>
-        </dl>
-      </div>
-      <div class="wrap">
-        <ul class="certs" aria-label="Certifications">
-          <li>
-            <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/><path d="M14 20.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><b>ISO 9001:2015</b> certified company</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="9" width="30" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 25V15l4.5 6 4.5-6v10M24 15h5M24 20h5M24 25h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><b>MSME</b> registered enterprise</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 30h24M10 30V18l10-8 10 8v12M17 30v-7h6v7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-            <span><b>Make in India</b> manufactured locally</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 31c0-12 8-20 22-22-1 14-9 22-21 22zM9 31l11-11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><b>Eco friendly</b> materials</span>
-          </li>
-        </ul>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section class="section contact" id="contact" aria-labelledby="contact-title">
-      <div class="wrap contact-grid">
-        <div class="contact-info">
-          <h2 id="contact-title">Visit, call or message us</h2>
-          <p>Homeowners, dealers and retailers are all welcome. Ask us about prices, stock and wholesale supply.</p>
-          <div class="contact-cards">
-            <a class="contact-line" href="tel:+919946000862">
-              <span class="contact-label">Call</span>
-              <span class="contact-value">99460 00862</span>
-            </a>
-            <a class="contact-line" data-wa="Hello AAA Fathima Furniture," href="#contact">
-              <span class="contact-label">WhatsApp</span>
-              <span class="contact-value">97459 36872</span>
-            </a>
-          </div>
-          <address class="address">
-            <span class="contact-label">Head office</span>
-            5/660, AAA&nbsp;Fathima Furniture,<br>
-            Murukkumon, Nilamel,<br>
-            Kollam 691 534, Kerala, India
-          </address>
-          <p class="branches"><span class="contact-label">Branches</span> Kollam | Ernakulam</p>
-          <div class="map">
-            <iframe title="Map showing AAA Fathima Furniture head office in Nilamel, Kollam" loading="lazy" referrerpolicy="no-referrer-when-downgrade" id="map-frame"></iframe>
+    <!-- ===== Contact ===== -->
+    <section class="view" id="view-contact" aria-labelledby="contact-title" hidden>
+      <div class="wrap narrow">
+        <div class="view-head">
+          <button class="back" type="button" data-back aria-label="Back">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div>
+            <h1 class="view-title" id="contact-title" data-view-title tabindex="-1">Contact us</h1>
+            <p class="view-sub">Homeowners, dealers and retailers are all welcome.</p>
           </div>
         </div>
+        <div class="contact-cards">
+          <a class="contact-card" href="tel:+919946000862">
+            <span class="contact-label">Call</span>
+            <span class="contact-value">99460 00862</span>
+          </a>
+          <a class="contact-card contact-card-wa" data-wa="Hello AAA Fathima Furniture," href="#/contact">
+            <span class="contact-label">WhatsApp</span>
+            <span class="contact-value">97459 36872</span>
+          </a>
+        </div>
+        <address class="address">
+          <span class="contact-label">Head office</span>
+          5/660, AAA&nbsp;Fathima Furniture,<br>
+          Murukkumon, Nilamel,<br>
+          Kollam 691 534, Kerala, India
+        </address>
+        <p class="branches"><span class="contact-label">Branches</span> Kollam | Ernakulam</p>
+        <div class="map">
+          <iframe title="Map showing AAA Fathima Furniture head office in Nilamel, Kollam" loading="lazy" referrerpolicy="no-referrer-when-downgrade" id="map-frame"></iframe>
+        </div>
 
-        <form class="enquiry-form" id="enquiry-form" novalidate>
-          <h3>Send an enquiry</h3>
+        <form class="panel" id="enquiry-form" novalidate>
+          <h2>Send an enquiry</h2>
           <p class="form-intro">Your message opens in WhatsApp, ready to send to our team.</p>
           <div class="field">
             <label for="f-name">Your name</label>
@@ -309,8 +330,8 @@
             <textarea id="f-message" name="message" rows="4" placeholder="For example: price for MW-251 Azure Haven, delivery to Thrissur"></textarea>
           </div>
           <div class="form-list" id="form-list" hidden></div>
-          <button class="btn btn-primary btn-block" type="submit">
-            <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.25-.12-1.46-.72-1.69-.8s-.39-.12-.55.12-.63.8-.78.96-.29.19-.53.06a6.7 6.7 0 0 1-3.34-2.92c-.25-.43.25-.4.72-1.34a.45.45 0 0 0-.02-.43c-.06-.12-.55-1.33-.76-1.82s-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04 4.77 4.77 0 0 0 1 2.53 10.9 10.9 0 0 0 4.18 3.7c1.56.67 2.17.73 2.95.61a2.5 2.5 0 0 0 1.66-1.17 2.05 2.05 0 0 0 .14-1.17c-.06-.1-.22-.16-.46-.28z"/></svg>
+          <button class="btn btn-wa btn-block" type="submit">
+            <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-glyph"/></svg>
             Send on WhatsApp
           </button>
         </form>
@@ -318,11 +339,12 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap footer-grid">
-      <div class="footer-brand">
-        <a class="brand brand-light" href="#top" aria-label="AAA Fathima Furniture, back to top">
-          <img class="brand-mark" src="assets/img/logo.webp" alt="" width="60" height="60" loading="lazy">
+  <!-- ===== Footer ===== -->
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#/" aria-label="AAA Fathima Furniture, home">
+          <img class="brand-mark" src="assets/img/logo.webp" alt="" width="48" height="48" loading="lazy">
           <span class="brand-words" aria-hidden="true">
             <span class="brand-name">AAA Fathima</span>
             <span class="brand-sub">F u r n i t u r e</span>
@@ -330,90 +352,88 @@
         </a>
         <p>Wholesale furniture distributor across South India for over 30 years.</p>
       </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="#bedroom-sets">Bedroom sets</a>
-        <a href="#catalogue">Catalogue</a>
-        <a href="#about">About us</a>
-        <a href="#materials">Materials</a>
-        <a href="#contact">Contact</a>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#/">Shop by category</a>
+        <a href="#/c/all">All products</a>
+        <a href="#/about">About us</a>
+        <a href="#/contact">Contact us</a>
       </nav>
-      <div class="footer-contact">
+      <div class="foot-contact">
         <p>5/660, Murukkumon, Nilamel,<br>Kollam 691 534, Kerala</p>
-        <p><a href="tel:+919946000862">99460 00862</a><br><a data-wa="Hello AAA Fathima Furniture," href="#contact">WhatsApp 97459 36872</a></p>
+        <p><a href="tel:+919946000862">99460 00862</a><br><a data-wa="Hello AAA Fathima Furniture," href="#/contact">WhatsApp 97459 36872</a></p>
       </div>
     </div>
-    <div class="wrap footer-base">
+    <div class="wrap foot-base">
       <p>&copy; <span id="year">2026</span> AAA&nbsp;Fathima Furniture. Kollam | Ernakulam</p>
       <p>ISO 9001:2015 certified company</p>
     </div>
   </footer>
 
-  <a class="fab is-tucked" data-wa="Hello AAA Fathima Furniture," href="#contact" aria-label="Chat with AAA Fathima Furniture on WhatsApp">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.25-.12-1.46-.72-1.69-.8s-.39-.12-.55.12-.63.8-.78.96-.29.19-.53.06a6.7 6.7 0 0 1-3.34-2.92c-.25-.43.25-.4.72-1.34a.45.45 0 0 0-.02-.43c-.06-.12-.55-1.33-.76-1.82s-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04 4.77 4.77 0 0 0 1 2.53 10.9 10.9 0 0 0 4.18 3.7c1.56.67 2.17.73 2.95.61a2.5 2.5 0 0 0 1.66-1.17 2.05 2.05 0 0 0 .14-1.17c-.06-.1-.22-.16-.46-.28z"/></svg>
+  <!-- ===== Phone bottom bar ===== -->
+  <nav class="bottom-nav" aria-label="Quick links">
+    <a href="#/" data-tab="home">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+      <span>Shop</span>
+    </a>
+    <a href="#/enquiry" data-tab="enquiry">
+      <span class="bn-icon">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4H6.5A1.5 1.5 0 0 0 5 5.5v14A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-14A1.5 1.5 0 0 0 17.5 4H16"/><rect x="8" y="2.5" width="8" height="3.5" rx="1"/><path d="M9 11h6M9 15h4"/></svg>
+        <span class="count" data-count hidden>0</span>
+      </span>
+      <span>Enquiry</span>
+    </a>
+    <a href="tel:+919946000862">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 3.5h3l1.8 4.6-2.3 1.5a11 11 0 0 0 6.4 6.4l1.5-2.3 4.6 1.8v3a2 2 0 0 1-2.1 2A16.5 16.5 0 0 1 3.5 5.6a2 2 0 0 1 2-2.1z"/></svg>
+      <span>Call</span>
+    </a>
+    <a href="#/contact" data-tab="contact">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>
+      <span>Contact</span>
+    </a>
+  </nav>
+
+  <a class="fab" data-wa="Hello AAA Fathima Furniture," href="#/contact" aria-label="Chat with AAA Fathima Furniture on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-glyph"/></svg>
   </a>
-  <button class="list-fab" type="button" data-open-list hidden>
-    Enquiry list <span class="count" data-count>0</span>
-  </button>
 
-  <!-- Product detail -->
-  <dialog class="pd" id="product-dialog" aria-labelledby="pd-title">
-    <div class="pd-inner">
-      <button class="icon-btn pd-close" type="button" data-close aria-label="Close">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4z"/></svg>
+  <!-- ===== Menu ===== -->
+  <dialog class="menu" id="menu" aria-label="Menu">
+    <div class="menu-head">
+      <a class="brand" href="#/" aria-label="AAA Fathima Furniture, home">
+        <img class="brand-mark" src="assets/img/logo.webp" alt="" width="36" height="36">
+        <span class="brand-words" aria-hidden="true">
+          <span class="brand-name">AAA Fathima</span>
+          <span class="brand-sub">F u r n i t u r e</span>
+        </span>
+      </a>
+      <button class="icon-btn" type="button" data-close-menu aria-label="Close menu">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
       </button>
-      <div class="pd-figure" id="pd-figure"></div>
-      <div class="pd-body">
-        <p class="tag" id="pd-tag"></p>
-        <h2 id="pd-title"></h2>
-        <p class="pd-finish" id="pd-finish"></p>
-        <div id="pd-detail"></div>
-        <div class="pd-actions">
-          <a class="btn btn-primary" id="pd-wa" target="_blank" rel="noopener">Ask about this on WhatsApp</a>
-          <button class="btn btn-outline" type="button" id="pd-add">Add to enquiry list</button>
-          <button class="link-btn" type="button" id="pd-copy">Copy link to this model</button>
-        </div>
-        <div class="pd-nav">
-          <button class="link-btn" type="button" id="pd-prev">Previous model</button>
-          <span id="pd-pos"></span>
-          <button class="link-btn" type="button" id="pd-next">Next model</button>
-        </div>
-      </div>
     </div>
-  </dialog>
-
-  <!-- Enquiry list -->
-  <dialog class="drawer" id="enquiry-dialog" aria-labelledby="eq-title">
-    <div class="drawer-inner">
-      <div class="drawer-head">
-        <h2 id="eq-title">Enquiry list</h2>
-        <button class="icon-btn" type="button" data-close aria-label="Close enquiry list">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4z"/></svg>
-        </button>
-      </div>
-      <p class="drawer-intro">Collect the models you're interested in, then ask about price and availability in one WhatsApp message.</p>
-      <ul class="eq-items" id="eq-items"></ul>
-      <div class="eq-empty" id="eq-empty">
-        <p>Your list is empty. Use <b>Add to enquiry list</b> on any model in the catalogue.</p>
-        <a class="btn btn-outline" href="#catalogue" data-close>Browse the catalogue</a>
-      </div>
-      <form class="drawer-foot" id="eq-form" novalidate>
-        <div class="field-row">
-          <div class="field">
-            <label for="eq-name">Your name</label>
-            <input id="eq-name" type="text" autocomplete="name">
-          </div>
-          <div class="field">
-            <label for="eq-place">Town or city</label>
-            <input id="eq-place" type="text" autocomplete="address-level2">
-          </div>
-        </div>
-        <button class="btn btn-primary btn-block" type="submit">Send list on WhatsApp</button>
-        <button class="link-btn" type="button" id="eq-clear">Clear list</button>
-      </form>
+    <nav class="menu-nav" aria-label="Menu">
+      <a href="#/">Home</a>
+      <p class="menu-label">Shop by category</p>
+      <div id="menu-cats"></div>
+      <p class="menu-label">More</p>
+      <a href="#/enquiry">Enquiry list</a>
+      <a href="#/about">About us</a>
+      <a href="#/contact">Contact us</a>
+    </nav>
+    <div class="menu-foot">
+      <a class="btn btn-wa btn-block" data-wa="Hello AAA Fathima Furniture," href="#/contact">
+        <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-glyph"/></svg>
+        WhatsApp us
+      </a>
+      <a class="btn btn-outline btn-block" href="tel:+919946000862">Call 99460 00862</a>
     </div>
   </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- shared WhatsApp glyph, referenced with <use href="#wa-glyph"> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="wa-glyph" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.25-.12-1.46-.72-1.69-.8s-.39-.12-.55.12-.63.8-.78.96-.29.19-.53.06a6.7 6.7 0 0 1-3.34-2.92c-.25-.43.25-.4.72-1.34a.45.45 0 0 0-.02-.43c-.06-.12-.55-1.33-.76-1.82s-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04 4.77 4.77 0 0 0 1 2.53 10.9 10.9 0 0 0 4.18 3.7c1.56.67 2.17.73 2.95.61a2.5 2.5 0 0 0 1.66-1.17 2.05 2.05 0 0 0 .14-1.17c-.06-.1-.22-.16-.46-.28z"/></symbol>
+  </svg>
 
   <script src="assets/js/draw.js"></script>
   <script src="assets/js/data.js"></script>

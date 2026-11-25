@@ -29,6 +29,29 @@ The build command copies only the site files into `dist`, so this README and oth
 
 The site also works on any other static host (Netlify, Cloudflare Pages, Vercel, cPanel). Upload `index.html` and the `assets/` folder as they are.
 
+## How the site is laid out
+
+The site works like a simple shop app, designed for phones first. Visitors see the categories first and tap one to see its products:
+
+1. **Home**: banner, then round category tiles (three per row on phones, six on desktop).
+2. **Category**: the products in that category as a two-column grid, with chips to switch category.
+3. **Product**: the measured drawing, sizes, and buttons to ask on WhatsApp or add to the enquiry list.
+
+Phones get a bottom tab bar (Shop, Enquiry, Call, Contact) and a menu listing every category. On desktop the links move into the header. The search box under the header searches model numbers, names, categories and finishes.
+
+Every screen has its own address, so links can be shared and the phone's back button works:
+
+| Screen | Address |
+|---|---|
+| Home | `index.html#/` |
+| One category | `index.html#/c/wardrobe` (category ids are in `data.js`) |
+| All products | `index.html#/c/all` |
+| One product | `index.html#mw-203` |
+| Search | `index.html#/search/white` |
+| Enquiry list, About, Contact | `#/enquiry`, `#/about`, `#/contact` |
+
+The order of the category tiles follows the `CATEGORIES` list in `data.js`. Each category's `rep` is the model whose drawing is used for its tile.
+
 ## Editing content
 
 Everything you are likely to change is in `assets/js/data.js`:
@@ -43,14 +66,12 @@ Product drawings are generated from the `art` description of each product (see `
 
 There is no backend. The contact form, the "Ask on WhatsApp" buttons and the enquiry list each open WhatsApp (to 97459 36872) with the message already written. The visitor only has to press send.
 
-Each model has its own shareable link, for example `index.html#mw-203`.
-
 ## Logo
 
 All logo files were made from the logo image the client sent on WhatsApp (a JPEG of the wooden "AAA" mark on a white disc).
 
 - `assets/img/logo.webp`: the logo as sent, cropped to its white disc with a transparent background. Used in the header and footer.
-- `assets/img/logo-mark.svg`: a flat vector trace of the mark, in the logo's wood colour. The same shape is in `draw.js` (`logoMark()`) and is used for the faint watermarks behind the hero, bedroom sets and About sections.
+- `assets/img/logo-mark.svg`: a flat vector trace of the mark, in the logo's wood colour. The same shape is in `draw.js` (`logoMark()`) and is used on the Premium banner slide and the "All products" tile.
 - `assets/img/favicon.svg`, `favicon-32.png`, `apple-touch-icon.png`: browser tab and phone home-screen icons.
 
 If the client has the original logo file (AI, EPS, SVG, PDF or a large PNG), ask for it. It will be sharper than a WhatsApp image, especially for print. The wordmark "AAA Fathima" is set in the Jost typeface.
