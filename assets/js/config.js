@@ -12,6 +12,6 @@
  * admin panel explains how to connect.
  */
 window.MW_CONFIG = {
-  supabaseUrl: '',
-  supabaseKey: '',
+  supabaseUrl: 'https://ylivgkwjuevqefaaygcd.supabase.co',
+  supabaseKey: 'sb_publishable_p1uxkfoi4DvR53ZO4WXAaQ_7llaR4x5',
 };
