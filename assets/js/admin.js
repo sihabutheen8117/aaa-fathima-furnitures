@@ -31,6 +31,7 @@
   const byModel = (a, b) => a.localeCompare(b, 'en', { numeric: true });
   const norm = (s) => String(s || '').toLowerCase().replace(/[\s\-_.]/g, '');
   const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+  const rupees = (n) => '₹' + n.toLocaleString('en-IN');
 
   /* ---------- screens ---------- */
   const SCREENS = ['loading', 'setup', 'login', 'newpass', 'denied'];
@@ -90,7 +91,7 @@
     if (/fetch|network|load failed/i.test(msg)) return 'No internet connection. Check it and try again.';
     if (code === '23505') return `${what || 'That'} is already used. Choose another.`;
     if (code === '23503') return 'Something this depends on was changed or removed. Reload the page and try again.';
-    if (code === '23514') return 'Some values are not allowed. Check the model number and sizes.';
+    if (code === '23514') return 'Some values are not allowed. Check the model number, sizes and prices.';
     if (code === '42501' || /row-level security|permission denied|Unauthorized/i.test(msg)) return 'Your account is not allowed to make changes. Ask the site owner to add you to the staff list.';
     if (code === 'PGRST116') return 'This was changed or removed on another device. Reload the page and try again.';
     if (/JWT|expired|session/i.test(msg)) return 'You were signed out. Sign in again and retry.';
@@ -381,7 +382,8 @@
       const c = catById[p.category_id];
       const badge = !p.visible ? '<span class="ad-badge">Hidden</span>'
         : c && !c.visible ? '<span class="ad-badge">Category hidden</span>' : '';
-      const sub = [p.name || (c && c.single), p.finish].filter(Boolean).join(' · ');
+      const shown = p.price || p.mrp;
+      const sub = [p.name || (c && c.single), shown && rupees(shown), p.finish].filter(Boolean).join(' · ');
       return `<li><a class="ad-row" href="#/products/${encodeURIComponent(p.id)}">
           <span class="ad-thumb">${productPic(p)}</span>
           <span class="ad-row-text"><b>${esc(p.id)}</b><span>${esc(sub)}</span></span>
@@ -441,6 +443,7 @@
     $('#pf-name').value = p ? p.name || '' : '';
     $('#pf-finish').value = p ? p.finish || '' : '';
     ['h', 'd', 'w'].forEach((k) => { $('#pf-' + k).value = p && p[k] != null ? p[k] : ''; });
+    ['mrp', 'price'].forEach((k) => { $('#pf-' + k).value = p && p[k] != null ? p[k].toLocaleString('en-IN') : ''; });
     $('#pf-visible').checked = p ? p.visible : true;
     $('#pf-series').value = p ? p.series || '' : '';
     $('#pf-quote').value = p ? p.quote || '' : '';
@@ -451,6 +454,7 @@
     if (p) $('#pf-view').href = `index.html#${p.id.toLowerCase()}`;
     $('#pf-save').textContent = p ? 'Save changes' : 'Add product';
     clearProductErrors();
+    renderPriceHint();
     renderProductPic();
     dirty = false;
     showView('product');
@@ -541,6 +545,48 @@
     return { value: Math.round(n * 100) / 100 };
   }
 
+  /* ---------- prices ---------- */
+  // whole rupees, typed the way people write them: 20000, 20,000, ₹20,000, Rs. 20,000/-
+  function readRupees(raw) {
+    const s = String(raw).replace(/[₹,\s]/g, '').replace(/^rs\.?/i, '').replace(/\/-$/, '');
+    if (!s) return { value: null };
+    if (!/^\d+$/.test(s)) return { bad: true };
+    const n = Number(s);
+    if (n <= 0 || n >= 1e8) return { bad: true };
+    return { value: n };
+  }
+  // tells staff what customers will see, as they type
+  function renderPriceHint() {
+    const mrp = readRupees($('#pf-mrp').value);
+    const price = readRupees($('#pf-price').value);
+    let hint;
+    if (mrp.bad || price.bad) hint = 'Prices are whole rupees, like 20000 or 20,000.';
+    else if (!mrp.value && !price.value) hint = 'With no price, the website shows “Price on request”.';
+    else if (!price.value) hint = `The website shows ${rupees(mrp.value)}. Add an offer price to show a discount.`;
+    else if (!mrp.value) hint = `The website shows ${rupees(price.value)}. Add the MRP to show it struck through, with the saving.`;
+    else if (price.value > mrp.value) hint = 'The offer price is higher than the MRP. Check both.';
+    else if (price.value === mrp.value) hint = `The website shows ${rupees(price.value)}, with no discount because both prices are the same.`;
+    else {
+      const off = Math.floor(((mrp.value - price.value) * 100) / mrp.value);
+      hint = `The website shows ${rupees(price.value)} with MRP ${rupees(mrp.value)} struck through: save ${rupees(mrp.value - price.value)}` +
+        (off > 0 ? `, ${off}% off.` : '.');
+    }
+    $('#pf-price-hint').textContent = hint;
+  }
+  ['#pf-mrp', '#pf-price'].forEach((sel) => {
+    $(sel).addEventListener('input', () => {
+      // a fresh edit replaces the error from the last save with the live hint
+      setFieldError(null, '#pf-price-error');
+      ['#pf-mrp', '#pf-price'].forEach((s) => $(s).removeAttribute('aria-invalid'));
+      renderPriceHint();
+    });
+    // tidy to 20,000 when leaving the box, so the number is easy to check
+    $(sel).addEventListener('blur', (e) => {
+      const r = readRupees(e.target.value);
+      if (r.value) e.target.value = r.value.toLocaleString('en-IN');
+    });
+  });
+
   function setFieldError(input, errEl, msg) {
     const el = $(errEl);
     el.textContent = msg || '';
@@ -551,7 +597,8 @@
     setFieldError($('#pf-id'), '#pf-id-error');
     setFieldError($('#pf-cat'), '#pf-cat-error');
     setFieldError(null, '#pf-dims-error');
-    ['h', 'd', 'w'].forEach((k) => $('#pf-' + k).removeAttribute('aria-invalid'));
+    setFieldError(null, '#pf-price-error');
+    ['h', 'd', 'w', 'mrp', 'price'].forEach((k) => $('#pf-' + k).removeAttribute('aria-invalid'));
     $$('#pf-specs input, #pf-pieces input').forEach((i) => i.removeAttribute('aria-invalid'));
     showError('#pf-error', '');
   }
@@ -581,6 +628,20 @@
       dims[k] = r.value === undefined ? null : r.value;
     });
     if (dimsBad) setFieldError(null, '#pf-dims-error', 'Sizes are numbers of inches, like 74 or 31.5.');
+
+    const mrpInput = $('#pf-mrp');
+    const priceInput = $('#pf-price');
+    const mrp = readRupees(mrpInput.value);
+    const price = readRupees(priceInput.value);
+    if (mrp.bad || price.bad) {
+      [[mrpInput, mrp], [priceInput, price]].forEach(([input, r]) => {
+        if (r.bad) { input.setAttribute('aria-invalid', 'true'); if (!firstBad) firstBad = input; }
+      });
+      setFieldError(null, '#pf-price-error', 'Prices are whole rupees, like 20000 or 20,000.');
+    } else if (mrp.value && price.value && price.value > mrp.value) {
+      bad(priceInput, '#pf-price-error', 'The offer price can’t be more than the MRP.');
+    }
+    if (!$('#pf-price-error').hidden) $('#pf-price-hint').textContent = '';   // the error says it; no need to repeat it
 
     const specs = [];
     $$('#pf-specs li').forEach((li) => {
@@ -622,6 +683,7 @@
       id, category_id,
       name: text('#pf-name'), finish: text('#pf-finish'), series: text('#pf-series'), quote: text('#pf-quote'),
       h: dims.h, d: dims.d, w: dims.w,
+      mrp: mrp.value || null, price: price.value || null,
       specs, components,
       visible: $('#pf-visible').checked,
     };

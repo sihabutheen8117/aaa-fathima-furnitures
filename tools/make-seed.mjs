@@ -40,12 +40,12 @@ lines.push('insert into public.categories (id, name, single, position, visible) 
 lines.push(CATEGORIES.map((c, i) => `  (${[c.id, c.name, c.single, (i + 1) * 10, true].map(lit).join(', ')})`).join(',\n'));
 lines.push('on conflict (id) do nothing;', '');
 
-lines.push('insert into public.products (id, category_id, name, series, quote, finish, h, d, w, components, specs, art_key, visible) values');
+lines.push('insert into public.products (id, category_id, name, series, quote, finish, h, d, w, mrp, price, components, specs, art_key, visible) values');
 lines.push(PRODUCTS.map((p) => {
   const dims = p.dims || {};
   const components = (p.components || []).map((c) => ({ code: c.code, name: c.name, h: c.dims.h, d: c.dims.d, w: c.dims.w }));
   const specs = p.specs ? Object.entries(p.specs) : DEFAULT_SPECS;
-  return `  (${[p.id, p.cat, p.name, p.series, p.quote, p.finish, dims.h, dims.d, dims.w].map(lit).join(', ')}, ${json(components)}, ${json(specs)}, ${lit(p.id)}, true)`;
+  return `  (${[p.id, p.cat, p.name, p.series, p.quote, p.finish, dims.h, dims.d, dims.w, p.mrp, p.price].map(lit).join(', ')}, ${json(components)}, ${json(specs)}, ${lit(p.id)}, true)`;
 }).join(',\n'));
 lines.push('on conflict (id) do nothing;', '');
 

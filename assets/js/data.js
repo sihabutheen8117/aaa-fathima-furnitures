@@ -14,6 +14,9 @@
  *   cat     category id (see CATEGORIES)
  *   dims    { h, d, w } in inches, as printed: (H.74 | D.17 | W.32). Use null if unknown.
  *   finish  short description of colours/finish
+ *   mrp     optional MRP in whole rupees, shown struck through, e.g. 20000
+ *   price   optional offer price in whole rupees, e.g. 10000. With neither, the shop
+ *           shows "Price on request".
  *   photo   optional path to a real product photo, e.g. 'assets/img/products/MW-195.jpg'.
  *           When set, the photo is shown instead of the drawing.
  *   art     drawing description used when there is no photo (see draw.js)
@@ -24,10 +27,10 @@
 
   const SITE = {
     name: 'AAA Fathima Furniture',
-    phone: '+919946000862',
-    phoneDisplay: '99460 00862',
+    phone: '+918870639863',
+    phoneDisplay: '+91 88706 39863',
     whatsapp: '918870639863',
-    whatsappDisplay: '88706 39863',
+    whatsappDisplay: '+91 88706 39863',
     address: ['5/660, AAA Fathima Furniture', 'Murukkumon, Nilamel', 'Kollam 691 534', 'Kerala, India'],
     branches: ['Kollam', 'Ernakulam'],
     mapQuery: 'AAA Fathima Furniture, Murukkumon, Nilamel, Kollam, Kerala 691534',

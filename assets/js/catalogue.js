@@ -8,9 +8,10 @@
  *
  * Whatever the source, the shop gets the same shape:
  *   CATEGORIES  [{ id, name, single, rep, photo }] in home page order
- *   PRODUCTS    [{ id, cat, name, series, quote, finish, dims, components, specs,
- *                  photo, thumb, art }]
+ *   PRODUCTS    [{ id, cat, name, series, quote, finish, dims, mrp, price, components,
+ *                  specs, photo, thumb, art }]
  *     dims        { h, d, w } in inches (any may be null), or null when none are known
+ *     mrp/price   MRP and offer price in whole rupees, or null when not set
  *     components  pieces of a set: [{ code, name, dims }]
  *     specs       [[label, value], ...] in display order
  *     photo/thumb large and small photo URLs, or null
@@ -26,7 +27,7 @@
   const DEFAULT_SPECS = [['Material', 'Particle board'], ['Assembly', 'Easy assembly']];
   const COLUMNS = {
     categories: 'id,name,single,position,rep_product,photo_url',
-    products: 'id,category_id,name,series,quote,finish,h,d,w,components,specs,photo_url,thumb_url,art_key',
+    products: 'id,category_id,name,series,quote,finish,h,d,w,mrp,price,components,specs,photo_url,thumb_url,art_key',
   };
 
   // built-in drawings, by model number (the database refers to them by art_key)
@@ -45,6 +46,7 @@
       PRODUCTS: bundled.PRODUCTS.map((p) => ({
         id: p.id, cat: p.cat, name: p.name || '', series: p.series || '', quote: p.quote || '', finish: p.finish || '',
         dims: dimsOf(p.dims),
+        mrp: num(p.mrp), price: num(p.price),
         components: (p.components || []).map((c) => ({ code: c.code, name: c.name, dims: dimsOf(c.dims) })),
         specs: p.specs ? Object.entries(p.specs) : DEFAULT_SPECS,
         photo: p.photo || null, thumb: p.photo || null, art: p.art || null,
@@ -60,6 +62,7 @@
     const PRODUCTS = prods.filter((p) => known.has(p.category_id)).map((p) => ({
       id: p.id, cat: p.category_id, name: p.name || '', series: p.series || '', quote: p.quote || '', finish: p.finish || '',
       dims: dimsOf(p),
+      mrp: num(p.mrp), price: num(p.price),
       components: (Array.isArray(p.components) ? p.components : [])
         .map((c) => ({ code: c.code || '', name: c.name || '', dims: dimsOf(c) })),
       specs: (Array.isArray(p.specs) ? p.specs : []).filter((s) => Array.isArray(s) && s[0] && s[1]),

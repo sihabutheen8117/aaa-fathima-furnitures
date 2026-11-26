@@ -52,6 +52,27 @@ window.MWCatalogue.ready.then(function (catalogue) {
   };
   const sizeLine = (p) => fmtDims(p.dims) || (p.components.length ? `${p.components.length}-piece set` : 'Size on request');
   const cm = (inches) => Math.round(inches * 2.54);
+
+  /* ---------- prices ---------- */
+  // Indian digit grouping: ₹1,20,000
+  const rupees = (n) => '₹' + n.toLocaleString('en-IN');
+  // what the customer pays (the offer price, else the MRP), and the MRP struck through when it is higher;
+  // the discount is rounded down so it never claims more than it is
+  function priceOf(p) {
+    const now = p.price || p.mrp;
+    if (!now) return null;
+    const was = p.mrp > now ? p.mrp : null;
+    return { now, was, save: was ? was - now : 0, off: was ? Math.floor(((was - now) * 100) / was) : 0 };
+  }
+  const dealBadge = (pr) => (pr && pr.off > 0 ? `<span class="deal" aria-hidden="true"><b>${pr.off}%</b>OFF</span>` : '');
+  function priceBlock(pr) {
+    if (!pr) return '<span class="price price-ask">Price on request</span>';
+    return `<span class="price">${pr.was ? `<s class="price-mrp">MRP ${rupees(pr.was)}</s>` : ''}
+      <span class="price-row">
+        <span class="price-now"><span class="sr-only">${pr.was ? 'Offer price ' : 'Price '}</span>${rupees(pr.now)}</span>
+        ${pr.save ? `<span class="price-save">Save <b>${rupees(pr.save)}</b><span class="sr-only">, ${pr.off}% off</span></span>` : ''}
+      </span></span>`;
+  }
   const waLink = (text) => `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`;
   function openExternal(url) {
     const a = document.createElement('a');
@@ -59,7 +80,7 @@ window.MWCatalogue.ready.then(function (catalogue) {
     document.body.appendChild(a); a.click(); a.remove();
   }
 
-  const ICON_PLUS = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  const ICON_CART = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.2l2.1 10.3a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6"/><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg>';
   const ICON_CHECK = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 
   // stand-in picture for a product that has neither a photo nor a built-in drawing
@@ -134,7 +155,8 @@ window.MWCatalogue.ready.then(function (catalogue) {
     return enquiry.map((i) => {
       const p = byId[i.id];
       const d = fmtDims(p.dims);
-      return `• ${p.id} ${titleOf(p)}${d ? ` (${d})` : ''}, qty ${i.qty}`;
+      const pr = priceOf(p);
+      return `• ${p.id} ${titleOf(p)}${d ? ` (${d})` : ''}, qty ${i.qty}${pr ? `, ${rupees(pr.now)}${i.qty > 1 ? ' each' : ''}` : ''}`;
     });
   }
 
@@ -148,7 +170,7 @@ window.MWCatalogue.ready.then(function (catalogue) {
       const on = inList(b.dataset.add);
       b.setAttribute('aria-pressed', String(on));
       b.setAttribute('aria-label', `Add ${b.dataset.add} to enquiry list`);
-      b.innerHTML = on ? `${ICON_CHECK}<span>Added</span>` : `${ICON_PLUS}<span>Add to list</span>`;
+      b.innerHTML = on ? `${ICON_CHECK}<span>Added</span>` : `${ICON_CART}<span>Add to list</span>`;
     });
     if (current && current.view === 'product') {
       $('#pd-add').textContent = inList(current.id) ? 'Added. View enquiry list' : 'Add to enquiry list';
@@ -171,13 +193,14 @@ window.MWCatalogue.ready.then(function (catalogue) {
 
   /* ---------- product card ---------- */
   function card(p) {
+    const pr = priceOf(p);
     return `<li class="card">
       <a class="card-link" href="#${p.id.toLowerCase()}">
-        <span class="card-img">${drawing(p, { label: '' })}</span>
+        <span class="card-img">${drawing(p, { label: '' })}${dealBadge(pr)}</span>
         <span class="card-text">
           <span class="card-name">${esc(p.name ? p.name + (p.components.length ? ' set' : '') : catById[p.cat].single)}</span>
           <span class="card-model">${p.id}</span>
-          <span class="card-dims">${esc(sizeLine(p))}</span>
+          ${priceBlock(pr)}
         </span>
       </a>
       <button class="card-add" type="button" data-add="${p.id}" aria-pressed="false"></button>
@@ -308,10 +331,12 @@ window.MWCatalogue.ready.then(function (catalogue) {
     crumb.textContent = cat.name;
     crumb.setAttribute('href', `#/c/${p.cat}`);
 
-    $('#pd-figure').innerHTML = drawing(p, p.dims ? { dims: p.dims, pad: 0.02, big: true } : { pad: 0.04, big: true });
+    const pr = priceOf(p);
+    $('#pd-figure').innerHTML = drawing(p, p.dims ? { dims: p.dims, pad: 0.02, big: true } : { pad: 0.04, big: true }) + dealBadge(pr);
     $('#pd-tag').innerHTML = `<b>${esc(p.id.replace(/-/g, ' - '))}</b><span>${esc(p.name || cat.single)}</span>`;
     $('#pd-title').textContent = p.name ? title : `${title} ${p.id}`;
     $('#pd-finish').textContent = p.finish || '';
+    $('#pd-price').innerHTML = priceBlock(pr);
 
     let detail = '';
     if (p.quote) detail += `<p class="quote">&ldquo;${esc(p.quote)}&rdquo;</p>`;
@@ -327,7 +352,8 @@ window.MWCatalogue.ready.then(function (catalogue) {
 
     const d = fmtDims(p.dims);
     const what = p.name ? title : lowerName(title);
-    $('#pd-wa').href = waLink(`Hello ${SITE.name}, I'm interested in the ${what} ${p.id}${d ? ` (${d})` : ''}. Could you share the price and availability?`);
+    $('#pd-wa').href = waLink(`Hello ${SITE.name}, I'm interested in the ${what} ${p.id}${d ? ` (${d})` : ''}` +
+      (pr ? `, offer price ${rupees(pr.now)}. Could you confirm the availability?` : '. Could you share the price and availability?'));
 
     const others = inCat(p.cat).filter((x) => x.id !== p.id);
     $('#pd-more').hidden = others.length === 0;
@@ -359,9 +385,11 @@ window.MWCatalogue.ready.then(function (catalogue) {
   function renderEnquiry() {
     $('#eq-items').innerHTML = enquiry.map((i) => {
       const p = byId[i.id];
+      const pr = priceOf(p);
       return `<li class="eq-item">
         <a class="eq-thumb" href="#${p.id.toLowerCase()}" aria-label="View ${esc(p.id)}">${drawing(p, { label: '' })}</a>
         <div class="eq-meta"><b>${esc(p.id)}</b><span>${esc(titleOf(p))}</span><span>${esc(sizeLine(p))}</span>
+          ${pr ? `<span class="eq-price">${rupees(pr.now)}${i.qty > 1 ? ' each' : ''}</span>` : ''}
           <button class="link-btn" type="button" data-remove="${esc(p.id)}">Remove</button></div>
         <div class="qty" role="group" aria-label="Quantity of ${esc(p.id)}">
           <button type="button" data-qty="-1" data-id="${esc(p.id)}" aria-label="One fewer ${esc(p.id)}">&minus;</button>
@@ -397,7 +425,7 @@ window.MWCatalogue.ready.then(function (catalogue) {
     if (!enquiry.length) return;
     const name = $('#eq-name').value.trim();
     const place = $('#eq-place').value.trim();
-    const lines = [`Hello ${SITE.name},`, 'Please share the price and availability for:', ...listLines()];
+    const lines = [`Hello ${SITE.name},`, 'Please confirm the price and availability for:', ...listLines()];
     if (name || place) lines.push('');
     if (name) lines.push(`Name: ${name}`);
     if (place) lines.push(`Place: ${place}`);

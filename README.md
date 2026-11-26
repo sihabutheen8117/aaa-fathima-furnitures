@@ -34,8 +34,10 @@ The site also works on any other static host (Netlify, Cloudflare Pages, Vercel,
 The site works like a simple shop app, designed for phones first. Visitors see the categories first and tap one to see its products:
 
 1. **Home**: banner, then round category tiles (three per row on phones, six on desktop).
-2. **Category**: the products in that category as a two-column grid, with chips to switch category.
-3. **Product**: the measured drawing, sizes, and buttons to ask on WhatsApp or add to the enquiry list.
+2. **Category**: the products in that category as a two-column grid, with chips to switch category. Each card shows the name, model number and price.
+3. **Product**: the measured drawing, price, sizes, and buttons to ask on WhatsApp or add to the enquiry list.
+
+**Prices.** Each product can have an **MRP** and an **offer price**, both in whole rupees. With both set, the shop shows the MRP struck through, the offer price, how much the customer saves and a "% OFF" badge on the picture (the percentage is rounded down, so it never claims more than the real discount). With only one of them, that price is shown on its own. With neither, the product shows "Price on request". Prices are also added to the enquiry list and to the WhatsApp messages.
 
 Phones get a bottom tab bar (Shop, Enquiry, Call, Contact) and a menu listing every category. On desktop the links move into the header. The search box under the header searches model numbers, names, categories and finishes.
 
@@ -56,7 +58,7 @@ Categories with no products yet are left off the home page, the menu and the cat
 
 Staff manage the catalogue at **`/admin.html`** (for example `https://your-site.onrender.com/admin.html`), on a phone or a computer. After signing in they can:
 
-- **Products**: add, edit, hide or delete a product: model number, category, name (for named sets such as *Black Coral*), colour and finish, sizes in inches, specifications, the pieces of a set, series and tagline.
+- **Products**: add, edit, hide or delete a product: model number, category, name (for named sets such as *Black Coral*), colour and finish, **MRP and offer price**, sizes in inches, specifications, the pieces of a set, series and tagline. While prices are typed, the form says exactly what customers will see (for example "₹10,000 with MRP ₹20,000 struck through: save ₹10,000, 50% off"). An offer price above the MRP is refused.
 - **Photos**: take a photo with the phone or choose one. It is shrunk on the phone before uploading (a large copy for the product screen and a small one for lists), so pages stay fast on mobile data. A photo replaces the built-in drawing.
 - **Hide instead of delete**: switching off *Show on the website* takes a product off the shop without losing it. Hiding a category hides all its products.
 - **Categories**: add, rename, hide, reorder (the arrows set the order of the home page tiles), choose which product's picture is used for the round tile or upload a tile photo, and delete a category once it is empty.
@@ -73,7 +75,7 @@ While `assets/js/config.js` is empty, the shop simply runs from `data.js` as bef
 
 `data.js` still holds:
 
-- **Contact details**: the `SITE` block (phone, WhatsApp number, address, branches). These are not in the admin panel.
+- **Contact details**: the `SITE` block (phone, WhatsApp number, address, branches). These are not in the admin panel. Calls and WhatsApp both go to +91 88706 39863; the number is also written in `index.html` (header, contact screen, footer, menu and bottom bar).
 - **The built-in drawings** of the original 39 models (the `art` of each product, drawn to each model's real proportions by `assets/js/draw.js`). The database links to them by model number (`art_key`), so a product keeps its drawing until someone uploads a photo for it, even if its model number is changed.
 - **The original catalogue**, used as the last fallback and to create `supabase/seed.sql` (`node tools/make-seed.mjs`).
 
@@ -92,6 +94,7 @@ While `assets/js/config.js` is empty, the shop simply runs from `data.js` as bef
 
 Good to know:
 
+- **Updating an existing database.** If the tables were created before prices were added, run all of `supabase/schema.sql` again *before* publishing the new site. It adds the `mrp` and `price` columns and leaves everything else as it is. Until then the shop can't read the catalogue from the database and falls back to its saved copy.
 - **Forgot password emails.** Supabase's built-in email sender is meant for testing: it sends only a few emails an hour and may deliver only to members of your Supabase team. For reliable reset emails, add an email provider under *Authentication > Emails > SMTP Settings* (Brevo and Resend have free plans). Until then, you can set a new password for a staff member yourself in *Authentication > Users*.
 - **Free projects pause after a week without activity.** While paused, the shop shows its saved product list and the admin panel can't save. Restore the project from the Supabase dashboard, or keep it busy with a scheduled request (for example a GitHub Actions job that reads one category twice a week).
 - **Backups.** The free plan keeps no backups you can download. Now and then, export the `products` and `categories` tables as CSV from the *Table Editor*.

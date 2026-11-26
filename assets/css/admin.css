@@ -100,6 +100,11 @@ body.admin { background: var(--paper); }
 .ad-dims { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .ad-dims label { font-size: .85rem; color: var(--ink-2); font-weight: 400; }
 .ad-fieldset .field-error { margin-top: 6px; }
+.ad-prices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.ad-prices label { font-size: .85rem; color: var(--ink-2); font-weight: 400; }
+.ad-prices input { font-variant-numeric: tabular-nums; }
+.ad-price-hint { margin-top: 8px; }
+.ad-price-hint:empty { display: none; }
 
 .ad-prefix {
   display: flex; align-items: center; border: 1px solid #d9d0c8; border-radius: 10px; background: #fff;

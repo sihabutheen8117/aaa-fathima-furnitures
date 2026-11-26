@@ -169,6 +169,22 @@
           </div>
 
           <fieldset class="ad-fieldset">
+            <legend>Price in rupees <span class="ad-opt">optional</span></legend>
+            <div class="ad-prices">
+              <div class="field">
+                <label for="pf-mrp">MRP</label>
+                <div class="ad-prefix"><span aria-hidden="true">₹</span><input id="pf-mrp" type="text" inputmode="numeric" autocomplete="off" placeholder="20,000" aria-describedby="pf-price-hint pf-price-error"></div>
+              </div>
+              <div class="field">
+                <label for="pf-price">Offer price</label>
+                <div class="ad-prefix"><span aria-hidden="true">₹</span><input id="pf-price" type="text" inputmode="numeric" autocomplete="off" placeholder="10,000" aria-describedby="pf-price-hint pf-price-error"></div>
+              </div>
+            </div>
+            <p class="ad-hint ad-price-hint" id="pf-price-hint" aria-live="polite"></p>
+            <p class="field-error" id="pf-price-error" hidden></p>
+          </fieldset>
+
+          <fieldset class="ad-fieldset">
             <legend>Size in inches <span class="ad-opt">leave empty if not known</span></legend>
             <div class="ad-dims">
               <div class="field"><label for="pf-h">Height</label><input id="pf-h" type="text" inputmode="decimal" autocomplete="off"></div>

@@ -38,6 +38,8 @@ create table if not exists public.products (
   h numeric check (h > 0 and h < 1000), -- height, inches
   d numeric check (d > 0 and d < 1000), -- depth, inches
   w numeric check (w > 0 and w < 1000), -- width, inches
+  mrp         integer check (mrp > 0),  -- MRP in rupees, shown struck through (optional)
+  price       integer check (price > 0),-- offer price in rupees, what the customer pays (optional)
   components  jsonb not null default '[]'::jsonb,   -- pieces of a set: [{code, name, h, d, w}]
   specs       jsonb not null default '[]'::jsonb,   -- [[label, value], ...] kept in this order
   photo_url   text,                     -- large photo
@@ -53,6 +55,16 @@ create table if not exists public.products (
 );
 
 create index if not exists products_category_idx on public.products (category_id);
+
+-- columns added after the first version: brings an existing database up to date
+alter table public.products add column if not exists mrp integer check (mrp > 0);
+alter table public.products add column if not exists price integer check (price > 0);
+
+-- an offer price can't be above the MRP
+do $$ begin
+  alter table public.products
+    add constraint products_price_not_above_mrp check (price is null or mrp is null or price <= mrp);
+exception when duplicate_object then null; end $$;
 
 -- the tile model must exist; renaming it follows, deleting it clears the tile choice
 do $$ begin
